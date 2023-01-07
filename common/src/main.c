@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
     1366, 768,
-    SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
+    SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN_DESKTOP);
   if (window == NULL) {
     logError("Error: %s\n", SDL_GetError());
     return -1;
