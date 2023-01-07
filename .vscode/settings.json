@@ -1,0 +1,12 @@
+{
+  "C_Cpp.default.includePath": [
+    "../SDL/include",
+    "../SDL_image",
+    "common/include"
+  ],
+  "files.associations": {
+    "sdl_image.h": "c",
+    "sdl.h": "c",
+    "log.h": "c"
+  }
+}
