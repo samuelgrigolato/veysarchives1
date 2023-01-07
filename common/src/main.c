@@ -8,6 +8,17 @@
 #include "core/log.h"
 
 
+void logDisplayInfo(SDL_Window *window) {
+  int h, w;
+  SDL_GL_GetDrawableSize(window, &w, &h);
+  logInfo("DrawableSize: %dx%d", w, h);
+  SDL_GetWindowSize(window, &w, &h);
+  logInfo("WindowSize: %dx%d", w, h);
+  SDL_GetWindowSizeInPixels(window, &w, &h);
+  logInfo("WindowSizeInPixels: %dx%d", w, h);
+}
+
+
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     logError("Error: %s\n", SDL_GetError());
@@ -19,12 +30,14 @@ int main(int argc, char* argv[]) {
   SDL_Window *window = SDL_CreateWindow("Veys's Archives: My Evil Doings",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
-    640, 480,
-    SDL_WINDOW_OPENGL);
+    1366, 768,
+    SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
   if (window == NULL) {
     logError("Error: %s\n", SDL_GetError());
     return -1;
   }
+
+  logDisplayInfo(window);
 
   logInfo("Window created.");
 
