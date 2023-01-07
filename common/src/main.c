@@ -52,6 +52,12 @@ int main(int argc, char* argv[]) {
   int running = 1;
   SDL_Event event;
 
+  SDL_Rect simpleSquare;
+  simpleSquare.h = 50;
+  simpleSquare.w = 50;
+  simpleSquare.x = 50;
+  simpleSquare.y = 50;
+
   while (running) {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
@@ -60,6 +66,8 @@ int main(int argc, char* argv[]) {
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRect(renderer, &simpleSquare);
     SDL_RenderPresent(renderer);
     SDL_Delay(100);
   }
