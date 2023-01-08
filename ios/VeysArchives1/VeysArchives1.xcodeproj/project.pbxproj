@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3668F33C2969F4800059E06B /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 3668F33B2969F4800059E06B /* log.c */; };
+		3605BBAA296B4D7400FD0F2D /* home.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBA8296B4D7400FD0F2D /* home.c */; };
+		3605BBAB296B4D7400FD0F2D /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBA9296B4D7400FD0F2D /* main.c */; };
+		3605BBAF296B4E2000FD0F2D /* navigation.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBAE296B4E2000FD0F2D /* navigation.c */; };
+		3605BBB1296B4E4100FD0F2D /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBB0296B4E4100FD0F2D /* log.c */; };
 		36A5D6ED29673ED500D11A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36A5D6EC29673ED500D11A33 /* Assets.xcassets */; };
 		36A5D6F029673ED500D11A33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36A5D6EE29673ED500D11A33 /* LaunchScreen.storyboard */; };
 		36A5D7382967443900D11A33 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A5D726296741F200D11A33 /* SDL2_image.framework */; };
@@ -136,7 +139,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3668F33B2969F4800059E06B /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = core/log.c; sourceTree = "<group>"; };
+		3605BBA8296B4D7400FD0F2D /* home.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = home.c; path = ../../../../common/src/screens/home.c; sourceTree = "<group>"; };
+		3605BBA9296B4D7400FD0F2D /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../../common/src/screens/main.c; sourceTree = "<group>"; };
+		3605BBAE296B4E2000FD0F2D /* navigation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = navigation.c; path = ../../../../common/src/core/navigation.c; sourceTree = "<group>"; };
+		3605BBB0296B4E4100FD0F2D /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
 		36A5D6DA29673ED400D11A33 /* VeysArchives1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VeysArchives1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A5D6EC29673ED500D11A33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36A5D6EF29673ED500D11A33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -160,6 +166,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3605BB99296B4D5100FD0F2D /* screens */ = {
+			isa = PBXGroup;
+			children = (
+				3605BBA8296B4D7400FD0F2D /* home.c */,
+				3605BBA9296B4D7400FD0F2D /* main.c */,
+			);
+			path = screens;
+			sourceTree = "<group>";
+		};
+		3605BBAD296B4DFE00FD0F2D /* core */ = {
+			isa = PBXGroup;
+			children = (
+				3605BBB0296B4E4100FD0F2D /* log.c */,
+				3605BBAE296B4E2000FD0F2D /* navigation.c */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
 		36A5D6D129673ED300D11A33 = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +206,8 @@
 		36A5D6DC29673ED400D11A33 /* VeysArchives1 */ = {
 			isa = PBXGroup;
 			children = (
-				3668F33B2969F4800059E06B /* log.c */,
+				3605BBAD296B4DFE00FD0F2D /* core */,
+				3605BB99296B4D5100FD0F2D /* screens */,
 				36A5D7412967456100D11A33 /* assets */,
 				36A5D73F296744B900D11A33 /* main.c */,
 				36A5D73D2967447600D11A33 /* SDL_uikit_main.c */,
@@ -409,7 +434,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3668F33C2969F4800059E06B /* log.c in Sources */,
+				3605BBB1296B4E4100FD0F2D /* log.c in Sources */,
+				3605BBAB296B4D7400FD0F2D /* main.c in Sources */,
+				3605BBAA296B4D7400FD0F2D /* home.c in Sources */,
+				3605BBAF296B4E2000FD0F2D /* navigation.c in Sources */,
 				36A5D740296744B900D11A33 /* main.c in Sources */,
 				36A5D73E2967447600D11A33 /* SDL_uikit_main.c in Sources */,
 			);
