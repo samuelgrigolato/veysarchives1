@@ -2,11 +2,17 @@
   "C_Cpp.default.includePath": [
     "../SDL/include",
     "../SDL_image",
-    "common/include"
+    "common/include",
+    "linux/include"
   ],
   "files.associations": {
     "sdl_image.h": "c",
     "sdl.h": "c",
-    "log.h": "c"
+    "log.h": "c",
+    "navigation.h": "c",
+    "atomic": "c",
+    "memory_resource": "c",
+    "main.h": "c",
+    "sdl_stdinc.h": "c"
   }
 }

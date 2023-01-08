@@ -6,12 +6,4 @@
 */
 #define SDL_DISABLE_IMMINTRIN_H 1
 
-#include <jni.h>
-
-
-JavaVM* gJavaVM;
-
-jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-  gJavaVM = vm;
-  return JNI_VERSION_1_6;
-}
+#define PLATFORM_SDL_FLAGS SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN_DESKTOP

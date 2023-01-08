@@ -1,11 +1,8 @@
-
-#ifndef __INTELLISENSE__
 #include "platform.h"
-#endif
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include "core/log.h"
+#include "screens/home.h"
 
 
 void logDisplayInfo(SDL_Window *window) {
@@ -31,7 +28,7 @@ int main(int argc, char* argv[]) {
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
     1366, 768,
-    SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN_DESKTOP);
+    PLATFORM_SDL_FLAGS);
   if (window == NULL) {
     logError("Error: %s\n", SDL_GetError());
     return -1;
@@ -52,22 +49,24 @@ int main(int argc, char* argv[]) {
   int running = 1;
   SDL_Event event;
 
-  SDL_Rect simpleSquare;
-  simpleSquare.h = 50;
-  simpleSquare.w = 50;
-  simpleSquare.x = 50;
-  simpleSquare.y = 50;
+  Nav_Init(renderer, window, Home_GetScreen());
 
   while (running) {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         running = 0;
+      } else if (event.type == SDL_MOUSEBUTTONUP) {
+        if (event.button.button == SDL_BUTTON_LEFT) {
+          struct Nav_ClickTap pos;
+          pos.x = event.button.x;
+          pos.y = event.button.y;
+          Nav_HandleClickTap(&pos);
+        }
       }
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderFillRect(renderer, &simpleSquare);
+    Nav_Render();
     SDL_RenderPresent(renderer);
     SDL_Delay(100);
   }

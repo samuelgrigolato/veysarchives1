@@ -1,1 +1,3 @@
 #include <curl/curl.h>
+
+#define PLATFORM_SDL_FLAGS SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS

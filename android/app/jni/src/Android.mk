@@ -5,7 +5,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := main
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/../../../../common/src/main.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/navigation.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/screens/main.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/screens/home.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/core/log.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/jni_onload.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../../common/include
