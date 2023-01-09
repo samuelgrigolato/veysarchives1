@@ -4,9 +4,6 @@
 #include "platform.h"
 #include <SDL.h>
 
-#define NAV_SCREEN_HOME 0
-#define NAV_SCREEN_MAIN 1
-
 
 struct Nav_ClickTap {
   Sint32 x;
