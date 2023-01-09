@@ -13,6 +13,8 @@
     "atomic": "c",
     "memory_resource": "c",
     "main.h": "c",
-    "sdl_stdinc.h": "c"
+    "sdl_stdinc.h": "c",
+    "positioning.h": "c",
+    "home.h": "c"
   }
 }

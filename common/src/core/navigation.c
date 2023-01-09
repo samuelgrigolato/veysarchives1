@@ -1,4 +1,5 @@
 #include "core/navigation.h"
+#include "core/positioning.h"
 
 
 struct Nav_Screen *current;
@@ -29,5 +30,6 @@ void Nav_GoTo(struct Nav_Screen *next) {
 
 void Nav_Render() {
   SDL_GetWindowSize(ctx.window, &ctx.windowWidth, &ctx.windowHeight);
+  Pos_Relayout(&ctx);
   current->render(&ctx);
 }

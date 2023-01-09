@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "core/log.h"
+#include "core/navigation.h"
+#include "core/positioning.h"
 #include "screens/home.h"
 
 
@@ -27,7 +29,7 @@ int main(int argc, char* argv[]) {
   SDL_Window *window = SDL_CreateWindow("Veys's Archives: My Evil Doings",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
-    1366, 768,
+    1600, 900,
     PLATFORM_SDL_FLAGS);
   if (window == NULL) {
     logError("Error: %s\n", SDL_GetError());

@@ -6,6 +6,7 @@ LOCAL_MODULE := main
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/../../../../common/src/main.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/navigation.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/positioning.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/screens/main.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/screens/home.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/core/log.c

@@ -1,6 +1,7 @@
 #include "platform.h"
 #include <SDL.h>
 #include "core/log.h"
+#include "core/positioning.h"
 #include "screens/home.h"
 #include "screens/main.h"
 
@@ -12,29 +13,32 @@ void Home_Init() {
 
 void Home_Render(struct Nav_Context *ctx) {
 
-  SDL_Rect logo;
-  logo.w = ctx->windowWidth * 0.8;
-  logo.h = ctx->windowHeight * 0.5;
-  logo.x = ctx->windowWidth * 0.1;
-  logo.y = ctx->windowHeight * 0.15;
+  SDL_Rect background;
+  background.w = 1600;
+  background.h = 800;
+  background.x = 0;
+  background.y = 0;
+  Pos_Apply(&background);
 
   SDL_SetRenderDrawColor(ctx->renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(ctx->renderer, &logo);
+  SDL_RenderFillRect(ctx->renderer, &background);
 
   SDL_Rect newGameButton;
-  newGameButton.w = ctx->windowWidth * 0.25;
-  newGameButton.h = ctx->windowHeight * 0.1;
-  newGameButton.x = ctx->windowWidth * 0.2;
-  newGameButton.y = ctx->windowHeight * 0.75;
+  newGameButton.w = 350;
+  newGameButton.h = 100;
+  newGameButton.x = 400;
+  newGameButton.y = 500;
+  Pos_Apply(&newGameButton);
 
   SDL_SetRenderDrawColor(ctx->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderFillRect(ctx->renderer, &newGameButton);
 
   SDL_Rect continueButton;
-  continueButton.w = ctx->windowWidth * 0.25;
-  continueButton.h = ctx->windowHeight * 0.1;
-  continueButton.x = ctx->windowWidth * 0.55;
-  continueButton.y = ctx->windowHeight * 0.75;
+  continueButton.w = 350;
+  continueButton.h = 100;
+  continueButton.x = 850;
+  continueButton.y = 500;
+  Pos_Apply(&continueButton);
 
   SDL_SetRenderDrawColor(ctx->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderFillRect(ctx->renderer, &continueButton);
