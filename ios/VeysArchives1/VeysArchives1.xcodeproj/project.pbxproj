@@ -20,6 +20,7 @@
 		36A5D73E2967447600D11A33 /* SDL_uikit_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 36A5D73D2967447600D11A33 /* SDL_uikit_main.c */; };
 		36A5D740296744B900D11A33 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 36A5D73F296744B900D11A33 /* main.c */; };
 		36A5D7422967456100D11A33 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 36A5D7412967456100D11A33 /* assets */; };
+		36A92493296E37BC00166938 /* positioning.c in Sources */ = {isa = PBXBuildFile; fileRef = 36A92484296E37BC00166938 /* positioning.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		36A5D73D2967447600D11A33 /* SDL_uikit_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_uikit_main.c; path = ../../../../SDL/src/main/uikit/SDL_uikit_main.c; sourceTree = "<group>"; };
 		36A5D73F296744B900D11A33 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../common/src/main.c; sourceTree = "<group>"; };
 		36A5D7412967456100D11A33 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../../common/assets; sourceTree = "<group>"; };
+		36A92484296E37BC00166938 /* positioning.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = positioning.c; path = ../../../../common/src/core/positioning.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 		3605BBAD296B4DFE00FD0F2D /* core */ = {
 			isa = PBXGroup;
 			children = (
+				36A92484296E37BC00166938 /* positioning.c */,
 				3605BBB0296B4E4100FD0F2D /* log.c */,
 				3605BBAE296B4E2000FD0F2D /* navigation.c */,
 			);
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3605BBB1296B4E4100FD0F2D /* log.c in Sources */,
+				36A92493296E37BC00166938 /* positioning.c in Sources */,
 				3605BBAB296B4D7400FD0F2D /* main.c in Sources */,
 				3605BBAA296B4D7400FD0F2D /* home.c in Sources */,
 				3605BBAF296B4E2000FD0F2D /* navigation.c in Sources */,
