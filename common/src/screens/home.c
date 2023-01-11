@@ -1,56 +1,88 @@
 #include "platform.h"
 #include <SDL.h>
+#include <SDL_image.h>
 #include "core/log.h"
 #include "core/positioning.h"
 #include "screens/home.h"
 #include "screens/main.h"
 
 
-void Home_Init() {
+struct Pos_AnchoredElement newGameButtonPos;
+struct Pos_AnchoredElement continueButtonPos;
+
+SDL_Rect newGameButtonRect;
+SDL_Rect continueButtonRect;
+
+SDL_Texture *backgroundTexture;
+SDL_Texture *newGameButtonTexture;
+SDL_Texture *continueButtonTexture;
+
+
+void Home_Init(struct Nav_Context *ctx) {
   logInfo("Home: initializing.");
+
+  newGameButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_RIGHT;
+  newGameButtonPos.width = 400;
+  newGameButtonPos.height = 100;
+  newGameButtonPos.anchorBottom = 200;
+  newGameButtonPos.anchorCenterRight = 100;
+
+  continueButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_LEFT;
+  continueButtonPos.width = 400;
+  continueButtonPos.height = 100;
+  continueButtonPos.anchorBottom = 200;
+  continueButtonPos.anchorCenterLeft = 100;
+
+  char fullImagePath[200];
+
+  sprintf(fullImagePath, "%s%s", "", "assets/home-background.png");
+  backgroundTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
+  if (backgroundTexture == NULL) {
+    logError("Home: failed to load background texture: %s %s", SDL_GetError());
+    exit(1);
+  }
+
+  sprintf(fullImagePath, "%s%s", "", "assets/new-game-button.png");
+  newGameButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
+  if (newGameButtonTexture == NULL) {
+    logError("Home: failed to load new game button texture: %s %s", SDL_GetError());
+    exit(1);
+  }
+
+  sprintf(fullImagePath, "%s%s", "", "assets/continue-button.png");
+  continueButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
+  if (continueButtonTexture == NULL) {
+    logError("Home: failed to load continue button texture: %s %s", SDL_GetError());
+    exit(1);
+  }
 }
 
 
 void Home_Render(struct Nav_Context *ctx) {
 
-  SDL_Rect background;
-  background.w = 1600;
-  background.h = 800;
-  background.x = 0;
-  background.y = 0;
-  Pos_Apply(&background);
+  SDL_Rect background = Pos_CalcCover();
+  if (SDL_RenderCopy(ctx->renderer, backgroundTexture, NULL, &background) != 0) {
+    logError("Home: failed to render background: %s %s", SDL_GetError());
+    exit(1);
+  }
 
-  SDL_SetRenderDrawColor(ctx->renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(ctx->renderer, &background);
+  newGameButtonRect = Pos_CalcAnchored(&newGameButtonPos);
+  if (SDL_RenderCopy(ctx->renderer, newGameButtonTexture, NULL, &newGameButtonRect) != 0) {
+    logError("Home: failed to render new game button: %s %s", SDL_GetError());
+    exit(1);
+  }
 
-  SDL_Rect newGameButton;
-  newGameButton.w = 350;
-  newGameButton.h = 100;
-  newGameButton.x = 400;
-  newGameButton.y = 500;
-  Pos_Apply(&newGameButton);
-
-  SDL_SetRenderDrawColor(ctx->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(ctx->renderer, &newGameButton);
-
-  SDL_Rect continueButton;
-  continueButton.w = 350;
-  continueButton.h = 100;
-  continueButton.x = 850;
-  continueButton.y = 500;
-  Pos_Apply(&continueButton);
-
-  SDL_SetRenderDrawColor(ctx->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(ctx->renderer, &continueButton);
+  continueButtonRect = Pos_CalcAnchored(&continueButtonPos);
+  if (SDL_RenderCopy(ctx->renderer, continueButtonTexture, NULL, &continueButtonRect) != 0) {
+    logError("Home: failed to render continue button: %s %s", SDL_GetError());
+    exit(1);
+  }
 
 }
 
 
 void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
-  float xRatio = pos->x / (float)ctx->windowWidth;
-  float yRatio = pos->y / (float)ctx->windowHeight;
-  logInfo("xRatio=%f yRatio=%f", xRatio, yRatio);
-  if (xRatio <= 0.45 && xRatio >= 0.2 && yRatio <= 0.85 && yRatio >= 0.75) {
+  if (Pos_IsInside(&newGameButtonRect, pos) || Pos_IsInside(&continueButtonRect, pos)) {
     Nav_GoTo(Main_GetScreen());
   }
 }
@@ -58,6 +90,9 @@ void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
 
 void Home_Destroy() {
   logInfo("Home: destroying.");
+  SDL_DestroyTexture(backgroundTexture);
+  SDL_DestroyTexture(newGameButtonTexture);
+  SDL_DestroyTexture(continueButtonTexture);
 }
 
 

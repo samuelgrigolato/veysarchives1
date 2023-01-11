@@ -18,7 +18,7 @@ struct Nav_Context {
 };
 
 struct Nav_Screen {
-  void (*init)();
+  void (*init)(struct Nav_Context *ctx);
   void (*handleClickTap)(struct Nav_Context *ctx, struct Nav_ClickTap *pos);
   void (*render)(struct Nav_Context *ctx);
   void (*destroy)();

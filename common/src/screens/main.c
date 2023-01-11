@@ -3,7 +3,7 @@
 #include "screens/home.h"
 
 
-void Main_Init() {
+void Main_Init(struct Nav_Context *ctx) {
   logInfo("Main: initializing.");
 }
 

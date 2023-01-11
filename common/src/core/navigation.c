@@ -6,11 +6,18 @@ struct Nav_Screen *current;
 struct Nav_Context ctx;
 
 
+void relayout() {
+  SDL_GetWindowSize(ctx.window, &ctx.windowWidth, &ctx.windowHeight);
+  Pos_Relayout(&ctx);
+}
+
+
 void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, struct Nav_Screen *initial) {
   ctx.renderer = renderer;
   ctx.window = window;
+  relayout();
   current = initial;
-  current->init();
+  current->init(&ctx);
 }
 
 
@@ -24,12 +31,11 @@ void Nav_GoTo(struct Nav_Screen *next) {
     current->destroy();
   }
   current = next;
-  current->init();
+  current->init(&ctx);
 }
 
 
 void Nav_Render() {
-  SDL_GetWindowSize(ctx.window, &ctx.windowWidth, &ctx.windowHeight);
-  Pos_Relayout(&ctx);
+  relayout();
   current->render(&ctx);
 }
