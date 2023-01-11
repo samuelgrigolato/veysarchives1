@@ -35,21 +35,21 @@ void Home_Init(struct Nav_Context *ctx) {
 
   char fullImagePath[200];
 
-  sprintf(fullImagePath, "%s%s", "", "assets/home-background.png");
+  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/home-background.png");
   backgroundTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
   if (backgroundTexture == NULL) {
     logError("Home: failed to load background texture: %s %s", SDL_GetError());
     exit(1);
   }
 
-  sprintf(fullImagePath, "%s%s", "", "assets/new-game-button.png");
+  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/new-game-button.png");
   newGameButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
   if (newGameButtonTexture == NULL) {
     logError("Home: failed to load new game button texture: %s %s", SDL_GetError());
     exit(1);
   }
 
-  sprintf(fullImagePath, "%s%s", "", "assets/continue-button.png");
+  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/continue-button.png");
   continueButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
   if (continueButtonTexture == NULL) {
     logError("Home: failed to load continue button texture: %s %s", SDL_GetError());
