@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include "core/log.h"
 #include "core/positioning.h"
+#include "core/resources.h"
 #include "screens/home.h"
 #include "screens/main.h"
 
@@ -33,28 +34,9 @@ void Home_Init(struct Nav_Context *ctx) {
   continueButtonPos.anchorBottom = 200;
   continueButtonPos.anchorCenterLeft = 100;
 
-  char fullImagePath[200];
-
-  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/home-background.png");
-  backgroundTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
-  if (backgroundTexture == NULL) {
-    logError("Home: failed to load background texture: %s %s", SDL_GetError());
-    exit(1);
-  }
-
-  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/new-game-button.png");
-  newGameButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
-  if (newGameButtonTexture == NULL) {
-    logError("Home: failed to load new game button texture: %s %s", SDL_GetError());
-    exit(1);
-  }
-
-  sprintf(fullImagePath, "%s%s", ASSETS_BASE_DIR, "assets/continue-button.png");
-  continueButtonTexture = IMG_LoadTexture(ctx->renderer, fullImagePath);
-  if (continueButtonTexture == NULL) {
-    logError("Home: failed to load continue button texture: %s %s", SDL_GetError());
-    exit(1);
-  }
+  backgroundTexture = Res_LoadTexture(ctx, "home-background.png");
+  newGameButtonTexture = Res_LoadTexture(ctx, "new-game-button.png");
+  continueButtonTexture = Res_LoadTexture(ctx, "continue-button.png");
 }
 
 
@@ -90,9 +72,9 @@ void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
 
 void Home_Destroy() {
   logInfo("Home: destroying.");
-  SDL_DestroyTexture(backgroundTexture);
-  SDL_DestroyTexture(newGameButtonTexture);
-  SDL_DestroyTexture(continueButtonTexture);
+  Res_ReleaseTexture(backgroundTexture);
+  Res_ReleaseTexture(newGameButtonTexture);
+  Res_ReleaseTexture(continueButtonTexture);
 }
 
 

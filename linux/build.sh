@@ -20,6 +20,7 @@ gcc \
   $BASE_DIR/../common/src/main.c \
   $BASE_DIR/../common/src/core/navigation.c \
   $BASE_DIR/../common/src/core/positioning.c \
+  $BASE_DIR/../common/src/core/resources.c \
   $BASE_DIR/../common/src/screens/main.c \
   $BASE_DIR/../common/src/screens/home.c \
   $BASE_DIR/src/core/log.c \
