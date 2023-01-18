@@ -4,6 +4,7 @@
 #include "core/log.h"
 #include "core/navigation.h"
 #include "core/positioning.h"
+#include "core/audio.h"
 #include "screens/home.h"
 
 
@@ -46,7 +47,11 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  logInfo("Renderer created. Running!");
+  logInfo("Renderer created.");
+
+  Aud_Init();
+
+  logInfo("Audio started. Running!");
 
   int running = 1;
   SDL_Event event;

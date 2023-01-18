@@ -4,6 +4,7 @@
 #include "core/log.h"
 #include "core/positioning.h"
 #include "core/resources.h"
+#include "core/audio.h"
 #include "screens/home.h"
 #include "screens/main.h"
 
@@ -17,6 +18,10 @@ SDL_Rect continueButtonRect;
 SDL_Texture *backgroundTexture;
 SDL_Texture *newGameButtonTexture;
 SDL_Texture *continueButtonTexture;
+
+Aud_SoundID backgroundMusic;
+Aud_SoundID buttonPress;
+Aud_EntryID backgroundMusicEntry;
 
 
 void Home_Init(struct Nav_Context *ctx) {
@@ -37,6 +42,11 @@ void Home_Init(struct Nav_Context *ctx) {
   backgroundTexture = Res_LoadTexture(ctx, "home-background.png");
   newGameButtonTexture = Res_LoadTexture(ctx, "new-game-button.png");
   continueButtonTexture = Res_LoadTexture(ctx, "continue-button.png");
+
+  backgroundMusic = Aud_Load("home-background.wav");
+  backgroundMusicEntry = Aud_FadeInAndRepeat(backgroundMusic);
+
+  buttonPress = Aud_Load("button-press.wav");
 }
 
 
@@ -65,6 +75,8 @@ void Home_Render(struct Nav_Context *ctx) {
 
 void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
   if (Pos_IsInside(&newGameButtonRect, pos) || Pos_IsInside(&continueButtonRect, pos)) {
+    Aud_PlayOnce(buttonPress);
+    Aud_FadeOutAndStop(backgroundMusicEntry);
     Nav_GoTo(Main_GetScreen());
   }
 }
@@ -75,6 +87,8 @@ void Home_Destroy() {
   Res_ReleaseTexture(backgroundTexture);
   Res_ReleaseTexture(newGameButtonTexture);
   Res_ReleaseTexture(continueButtonTexture);
+  Aud_Unload(backgroundMusic);
+  Aud_Unload(buttonPress);
 }
 
 
