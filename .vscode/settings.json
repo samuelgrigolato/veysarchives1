@@ -18,6 +18,7 @@
     "home.h": "c",
     "resources.h": "c",
     "platform.h": "c",
-    "audio.h": "c"
+    "audio.h": "c",
+    "source_location": "c"
   }
 }

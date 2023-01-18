@@ -68,12 +68,12 @@ Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
 
 
 struct PlayingSoundNode* findPlayingSound(Aud_EntryID entryId) {
-  struct PlayingSoundNode *current = playingSounds;
-  while (current != NULL) {
-    if (current->entryId == entryId) {
-      return current;
+  struct PlayingSoundNode *playingSound = playingSounds;
+  while (playingSound != NULL) {
+    if (playingSound->entryId == entryId) {
+      return playingSound;
     }
-    current = current->next;
+    playingSound = playingSound->next;
   }
   return NULL;
 }
@@ -146,16 +146,21 @@ Aud_SoundID Aud_Load(char *filePath) {
 
 
 void Aud_Unload(Aud_SoundID soundId) {
-  struct LoadedSoundNode **nextCandidate = &loadedSounds;
-  while (*nextCandidate != NULL) {
-    if ((*nextCandidate)->id == soundId) {
-      SDL_FreeWAV((*nextCandidate)->data);
-      *nextCandidate = (*nextCandidate)->next; 
-      free(*nextCandidate);
+  struct LoadedSoundNode **linkedListNode = &loadedSounds;
+  while (*linkedListNode != NULL) {
+    struct LoadedSoundNode *loadedSound = *linkedListNode;
+
+    if (loadedSound->id == soundId) {
+      SDL_FreeWAV(loadedSound->data);
+
+      *linkedListNode = loadedSound->next; // this is a linked list delete operation
+
+      free(loadedSound);
       logInfo("Audio: unloaded soundId=%u", soundId);
       return;
     }
-    nextCandidate = &(*nextCandidate)->next;
+
+    linkedListNode = &(*linkedListNode)->next; // this is a linked list next operation
   }
   logError("Audio: trying to unload soundID=%u but couldn't find it!", soundId);
   exit(1);
@@ -193,49 +198,54 @@ void onAudioDeviceCallback(void *userData, Uint8 *stream, int len) {
     stream[i] = 0; // silence
   }
 
-  struct PlayingSoundNode **playingSound = &playingSounds;
-  while (*playingSound != NULL) {
-    int remaining = (*playingSound)->length - (*playingSound)->pos;
+  struct PlayingSoundNode **linkedListNode = &playingSounds;
+  while (*linkedListNode != NULL) {
+    struct PlayingSoundNode *playingSound = *linkedListNode; // this is a linked list get value operation
+
+    int remaining = playingSound->length - playingSound->pos;
     int bytesPlayed = SDL_min(len, remaining);
     int wordsPlayed = bytesPlayed / 2;
     Sint16 *streamWords = (Sint16*)stream;
     int temp; // auxiliary for __builtin_add_overflow
     for (int i = 0; i < wordsPlayed; i++) {
-      Sint16 *word = (Sint16*)((*playingSound)->data + ((*playingSound)->pos + i * 2));
-      Sint16 wordWithVolume = *word * (*playingSound)->volume;
+      Sint16 *word = (Sint16*)(playingSound->data + (playingSound->pos + i * 2));
+      Sint16 wordWithVolume = *word * playingSound->volume;
       if (__builtin_add_overflow(streamWords[i], wordWithVolume, &temp)) {
         streamWords[i] = SDL_MAX_SINT16;
       } else {
         streamWords[i] += wordWithVolume;
       }
     }
-    if ((*playingSound)->stopping) {
-      if ((*playingSound)->volume > 0) {
-        (*playingSound)->volume -= 0.2;
+    if (playingSound->stopping) {
+      if (playingSound->volume > 0) {
+        playingSound->volume -= 0.2;
       }
     } else {
-      if ((*playingSound)->volume < 1) {
-        (*playingSound)->volume += 0.05;
+      if (playingSound->volume < 1) {
+        playingSound->volume += 0.05;
       }
     }
-    if (((remaining == bytesPlayed && !(*playingSound)->repeat)) || (*playingSound)->volume <= 0) {
+    if (((remaining == bytesPlayed && !playingSound->repeat)) || playingSound->volume <= 0) {
 
-      free((*playingSound)->data);
-      *playingSound = (*playingSound)->next;
+      free(playingSound->data);
 
       // useful for debugging
-      logInfo("Audio: finished playing a sound");
+      // logInfo("Audio: finished playing a sound");
+
+      *linkedListNode = (*linkedListNode)->next; // this is a linked list delete operation
 
     } else {
-      (*playingSound)->pos += bytesPlayed;
-      if ((*playingSound)->pos >= (*playingSound)->length) {
-        (*playingSound)->pos = 0;
+
+      playingSound->pos += bytesPlayed;
+      if (playingSound->pos >= playingSound->length) {
+        playingSound->pos = 0;
       }
 
       // useful for debugging
-      logInfo("Audio: played %d bytes, %d remaining", bytesPlayed, remaining);
+      // logInfo("Audio: played %d bytes, %d remaining", bytesPlayed, remaining);
 
-      playingSound = &(*playingSound)->next;
+      linkedListNode = &(*linkedListNode)->next; // this is a linked list next operation
+
     }
   }
 }
