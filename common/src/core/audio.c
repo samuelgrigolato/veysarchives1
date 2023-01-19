@@ -46,12 +46,11 @@ Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
   if (sound == NULL) {
     logError("Audio: tried to play an unloaded sound. soundId=%u", soundId);
   }
-  Uint32 soundLengthInBytes = sizeof(Sint16) * sound->length;
 
-  struct PlayingSoundNode *newNode = malloc(sizeof(struct PlayingSoundNode));
+  struct PlayingSoundNode *newNode = SDL_malloc(sizeof(struct PlayingSoundNode));
   newNode->entryId = nextEntryId++;
-  newNode->data = malloc(soundLengthInBytes);
-  SDL_memcpy(newNode->data, sound->data, soundLengthInBytes);
+  newNode->data = SDL_malloc(sound->length);
+  SDL_memcpy(newNode->data, sound->data, sound->length);
   newNode->length = sound->length;
   newNode->pos = 0;
   newNode->repeat = repeat;
@@ -109,7 +108,7 @@ Aud_SoundID findAvailableSoundId() {
 
 
 Aud_SoundID Aud_Load(char *filePath) {
-  struct LoadedSoundNode *loadedSound = malloc(sizeof(struct LoadedSoundNode));
+  struct LoadedSoundNode *loadedSound = SDL_malloc(sizeof(struct LoadedSoundNode));
   loadedSound->id = findAvailableSoundId();
 
   logInfo("Audio: loading %s as %u", filePath, loadedSound->id);
@@ -155,7 +154,7 @@ void Aud_Unload(Aud_SoundID soundId) {
 
       *linkedListNode = loadedSound->next; // this is a linked list delete operation
 
-      free(loadedSound);
+      SDL_free(loadedSound);
       logInfo("Audio: unloaded soundId=%u", soundId);
       return;
     }
@@ -227,7 +226,7 @@ void onAudioDeviceCallback(void *userData, Uint8 *stream, int len) {
     }
     if (((remaining == bytesPlayed && !playingSound->repeat)) || playingSound->volume <= 0) {
 
-      free(playingSound->data);
+      SDL_free(playingSound->data);
 
       // useful for debugging
       // logInfo("Audio: finished playing a sound");
