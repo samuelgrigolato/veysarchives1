@@ -1,34 +1,80 @@
 #include "core/log.h"
+#include "core/positioning.h"
+#include "core/resources.h"
+#include "core/audio.h"
 #include "screens/main.h"
 #include "screens/home.h"
 
 
+struct Pos_AnchoredElement optionsButtonPos;
+struct Pos_AnchoredElement mainCharacterPos;
+
+SDL_Rect optionsButtonRect;
+SDL_Rect mainCharacterRect;
+
+SDL_Texture *optionsButtonTexture;
+SDL_Texture *mainCharacterTexture;
+
+Aud_SoundID optionsButtonPress;
+
+
 void Main_Init(struct Nav_Context *ctx) {
   logInfo("Main: initializing.");
+
+  mainCharacterPos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
+  mainCharacterPos.width = 100;
+  mainCharacterPos.height = 100;
+  mainCharacterPos.anchorTop = 400;
+  mainCharacterPos.anchorCenterLeft = -50;
+
+  optionsButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
+  optionsButtonPos.width = 100;
+  optionsButtonPos.height = 100;
+  optionsButtonPos.anchorBottom = 0;
+  optionsButtonPos.anchorRight = 0;
+
+  optionsButtonTexture = Res_LoadTexture(ctx, "options-button.png");
+  mainCharacterTexture = Res_LoadTexture(ctx, "main-character.png");
+
+  optionsButtonPress = Aud_Load("button-press.wav");
 }
 
 
 void Main_Render(struct Nav_Context *ctx) {
 
-  SDL_Rect player;
-  player.w = ctx->windowWidth * 0.1;
-  player.h = ctx->windowHeight * 0.1;
-  player.x = ctx->windowWidth * 0.45;
-  player.y = ctx->windowHeight * 0.45;
+  SDL_Rect mainCharacterPose;
+  mainCharacterPose.w = 99;
+  mainCharacterPose.h = 99;
+  mainCharacterPose.x = 1;
+  mainCharacterPose.y = 201;
 
-  SDL_SetRenderDrawColor(ctx->renderer, 0, 255, 255, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(ctx->renderer, &player);
+  mainCharacterRect = Pos_CalcAnchored(&mainCharacterPos);
+  if (SDL_RenderCopy(ctx->renderer, mainCharacterTexture, &mainCharacterPose, &mainCharacterRect) != 0) {
+    logError("Main: failed to render main character: %s %s", SDL_GetError());
+    exit(1);
+  }
 
+  optionsButtonRect = Pos_CalcAnchored(&optionsButtonPos);
+  if (SDL_RenderCopy(ctx->renderer, optionsButtonTexture, NULL, &optionsButtonRect) != 0) {
+    logError("Main: failed to render options button: %s %s", SDL_GetError());
+    exit(1);
+  }
 }
 
 
 void Main_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
-  Nav_GoTo(Home_GetScreen());
+  if (Pos_IsInside(&optionsButtonRect, pos)) {
+    Aud_PlayOnce(optionsButtonPress);
+    Nav_GoTo(Home_GetScreen());
+  }
 }
 
 
 void Main_Destroy() {
   logInfo("Main: destroying.");
+  Res_ReleaseTexture(optionsButtonTexture);
+  Res_ReleaseTexture(mainCharacterTexture);
+  Aud_Unload(optionsButtonPress);
 }
 
 
