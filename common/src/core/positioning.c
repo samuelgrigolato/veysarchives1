@@ -124,3 +124,13 @@ SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, struct Nav_ClickTap *pos) {
     pos->y >= calculatedRect->y &&
     pos->y <= calculatedRect->y + calculatedRect->h;
 }
+
+
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEvent *event, struct Nav_Context *ctx) {
+  Sint32 x = ctx->windowWidth * event->nx;
+  Sint32 y = ctx->windowHeight * event->ny;
+  return x >= calculatedRect->x &&
+    x <= calculatedRect->x + calculatedRect->w &&
+    y >= calculatedRect->y &&
+    y <= calculatedRect->y + calculatedRect->h;
+}

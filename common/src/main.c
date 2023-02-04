@@ -19,6 +19,26 @@ void logDisplayInfo(SDL_Window *window) {
 }
 
 
+void handleFingerEvent(SDL_Event *event) {
+  struct Nav_FingerEvent fingerEvent;
+  switch (event->type) {
+    case SDL_FINGERDOWN:
+      fingerEvent.type = NAV_FINGER_EVENT_DOWN;
+      break;
+    case SDL_FINGERMOTION:
+      fingerEvent.type = NAV_FINGER_EVENT_MOTION;
+      break;
+    case SDL_FINGERUP:
+    default:
+      fingerEvent.type = NAV_FINGER_EVENT_UP;
+      break;
+  }
+  fingerEvent.nx = event->tfinger.x;
+  fingerEvent.ny = event->tfinger.y;
+  Nav_HandleFingerEvent(&fingerEvent);
+}
+
+
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     logError("Error: %s\n", SDL_GetError());
@@ -69,6 +89,10 @@ int main(int argc, char* argv[]) {
           pos.y = event.button.y;
           Nav_HandleClickTap(&pos);
         }
+      } else if (event.type == SDL_FINGERDOWN ||
+                 event.type == SDL_FINGERUP ||
+                 event.type == SDL_FINGERMOTION) {
+        handleFingerEvent(&event);
       }
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);

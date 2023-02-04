@@ -46,4 +46,6 @@ SDL_Rect Pos_CalcCover();
 
 SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, struct Nav_ClickTap *pos);
 
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEvent *event, struct Nav_Context *ctx);
+
 #endif

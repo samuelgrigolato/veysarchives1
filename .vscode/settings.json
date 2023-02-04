@@ -19,6 +19,7 @@
     "resources.h": "c",
     "platform.h": "c",
     "audio.h": "c",
-    "source_location": "c"
+    "source_location": "c",
+    "any": "c"
   }
 }

@@ -26,6 +26,11 @@ void Nav_HandleClickTap(struct Nav_ClickTap *pos) {
 }
 
 
+void Nav_HandleFingerEvent(struct Nav_FingerEvent *event) {
+  current->handleFingerEvent(&ctx, event);
+}
+
+
 void Nav_GoTo(struct Nav_Screen *next) {
   if (current != NULL) {
     current->destroy();

@@ -82,6 +82,10 @@ void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
 }
 
 
+void Home_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *event) {
+}
+
+
 void Home_Destroy() {
   logInfo("Home: destroying.");
   Res_ReleaseTexture(backgroundTexture);
@@ -99,6 +103,7 @@ struct Nav_Screen* Home_GetScreen() {
     instance->init = Home_Init;
     instance->render = Home_Render;
     instance->handleClickTap = Home_HandleClickTap;
+    instance->handleFingerEvent = Home_HandleFingerEvent;
     instance->destroy = Home_Destroy;
   }
   return instance;
