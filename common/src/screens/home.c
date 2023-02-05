@@ -50,6 +50,10 @@ void Home_Init(struct Nav_Context *ctx) {
 }
 
 
+void Home_UpdateModel(Uint64 elapsedTime) {
+}
+
+
 void Home_Render(struct Nav_Context *ctx) {
 
   SDL_Rect background = Pos_CalcCover();
@@ -86,6 +90,10 @@ void Home_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *eve
 }
 
 
+void Home_HandleKeyboardEvent(struct Nav_Context *ctx, struct Nav_KeyboardEvent *event) {
+}
+
+
 void Home_Destroy() {
   logInfo("Home: destroying.");
   Res_ReleaseTexture(backgroundTexture);
@@ -101,9 +109,11 @@ struct Nav_Screen* Home_GetScreen() {
   if (instance == NULL) {
     instance = malloc(sizeof(struct Nav_Screen));
     instance->init = Home_Init;
+    instance->updateModel = Home_UpdateModel;
     instance->render = Home_Render;
     instance->handleClickTap = Home_HandleClickTap;
     instance->handleFingerEvent = Home_HandleFingerEvent;
+    instance->handleKeyboardEvent = Home_HandleKeyboardEvent;
     instance->destroy = Home_Destroy;
   }
   return instance;

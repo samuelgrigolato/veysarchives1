@@ -23,19 +23,35 @@ void handleFingerEvent(SDL_Event *event) {
   struct Nav_FingerEvent fingerEvent;
   switch (event->type) {
     case SDL_FINGERDOWN:
-      fingerEvent.type = NAV_FINGER_EVENT_DOWN;
+      fingerEvent.type = NAV_FINGER_EVENT_TYPE_DOWN;
       break;
     case SDL_FINGERMOTION:
-      fingerEvent.type = NAV_FINGER_EVENT_MOTION;
+      fingerEvent.type = NAV_FINGER_EVENT_TYPE_MOTION;
       break;
     case SDL_FINGERUP:
     default:
-      fingerEvent.type = NAV_FINGER_EVENT_UP;
+      fingerEvent.type = NAV_FINGER_EVENT_TYPE_UP;
       break;
   }
   fingerEvent.nx = event->tfinger.x;
   fingerEvent.ny = event->tfinger.y;
   Nav_HandleFingerEvent(&fingerEvent);
+}
+
+
+void handleKeyboardEvent(SDL_Event *event) {
+  struct Nav_KeyboardEvent keyboardEvent;
+  switch (event->type) {
+    case SDL_KEYDOWN:
+      keyboardEvent.type = NAV_KEYBOARD_EVENT_TYPE_DOWN;
+      break;
+    case SDL_FINGERUP:
+    default:
+      keyboardEvent.type = NAV_KEYBOARD_EVENT_TYPE_UP;
+      break;
+  }
+  keyboardEvent.key = event->key.keysym.sym;
+  Nav_HandleKeyboardEvent(&keyboardEvent);
 }
 
 
@@ -75,6 +91,7 @@ int main(int argc, char* argv[]) {
 
   int running = 1;
   SDL_Event event;
+  Uint64 lastFrameStartTime = SDL_GetTicks64();
 
   Nav_Init(renderer, window, Home_GetScreen());
 
@@ -93,13 +110,28 @@ int main(int argc, char* argv[]) {
                  event.type == SDL_FINGERUP ||
                  event.type == SDL_FINGERMOTION) {
         handleFingerEvent(&event);
+      } else if (event.type == SDL_KEYDOWN ||
+                 event.type == SDL_KEYUP) {
+        handleKeyboardEvent(&event);
       }
     }
+
+    Uint64 thisFrameStartTime = SDL_GetTicks64();
+    Uint64 elapsedTime = thisFrameStartTime - lastFrameStartTime;
+    Nav_UpdateModel(elapsedTime);
+    lastFrameStartTime= thisFrameStartTime;
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
     Nav_Render();
     SDL_RenderPresent(renderer);
-    SDL_Delay(100);
+
+    Uint64 thisFrameEndTime = SDL_GetTicks64();
+    Uint64 thisFrameDuration = thisFrameEndTime - thisFrameStartTime;
+    if (thisFrameDuration < 25) {
+      // make the minimum frame duration to be 25ms
+      SDL_Delay(25 - thisFrameDuration);
+    }
   }
 
   SDL_Quit();

@@ -31,12 +31,22 @@ void Nav_HandleFingerEvent(struct Nav_FingerEvent *event) {
 }
 
 
+void Nav_HandleKeyboardEvent(struct Nav_KeyboardEvent *event) {
+  current->handleKeyboardEvent(&ctx, event);
+}
+
+
 void Nav_GoTo(struct Nav_Screen *next) {
   if (current != NULL) {
     current->destroy();
   }
   current = next;
   current->init(&ctx);
+}
+
+
+void Nav_UpdateModel(Uint64 elapsedTime) {
+  current->updateModel(elapsedTime);
 }
 
 

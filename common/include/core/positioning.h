@@ -6,17 +6,19 @@
 
 #include "core/navigation.h"
 
-#define POS_ANCHOR_TOP 1
-#define POS_ANCHOR_BOTTOM 2
-#define POS_ANCHOR_LEFT 4
-#define POS_ANCHOR_RIGHT 8
-#define POS_ANCHOR_CENTER_LEFT 16
-#define POS_ANCHOR_CENTER_RIGHT 32
+typedef enum {
+  POS_ANCHOR_TOP = 1,
+  POS_ANCHOR_BOTTOM = 2,
+  POS_ANCHOR_LEFT = 4,
+  POS_ANCHOR_RIGHT = 8,
+  POS_ANCHOR_CENTER_LEFT = 16,
+  POS_ANCHOR_CENTER_RIGHT = 32
+} Pos_Anchor;
 
 struct Pos_AnchoredElement {
 
   /** To be filled as a bitwise of POS_ANCHOR_XXXXX. */
-  Uint8 anchors;
+  Pos_Anchor anchors;
 
   Sint32 anchorTop;
   Sint32 anchorBottom;
