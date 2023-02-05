@@ -16,6 +16,7 @@ SDL_Rect mainCharacterRect;
 SDL_Texture *mainCharacterTexture;
 SDL_Rect mainCharacterPose;
 
+SDL_bool mobileMotionControllerVisible = !DESKTOP;
 struct Pos_AnchoredElement mobileMotionControllerPos;
 SDL_Rect mobileMotionControllerRect;
 SDL_Texture *mobileMotionControllerTexture;
@@ -47,16 +48,18 @@ void Main_Init(struct Nav_Context *ctx) {
   optionsButtonTexture = Res_LoadTexture(ctx, "options-button.png");
   optionsButtonPress = Aud_Load("button-press.wav");
 
-  mobileMotionControllerPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
-  mobileMotionControllerPos.width = MOBILE_MOTION_CONTROLLER_SIZE;
-  mobileMotionControllerPos.height = MOBILE_MOTION_CONTROLLER_SIZE;
-  mobileMotionControllerPos.anchorBottom = 50;
-  mobileMotionControllerPos.anchorLeft = 50;
-  mobileMotionControllerPose.w = MOBILE_MOTION_CONTROLLER_SIZE;
-  mobileMotionControllerPose.h = MOBILE_MOTION_CONTROLLER_SIZE;
-  mobileMotionControllerPose.x = MOBILE_MOTION_CONTROLLER_SIZE;
-  mobileMotionControllerPose.y = 0;
-  mobileMotionControllerTexture = Res_LoadTexture(ctx, "mobile-motion-controller.png");
+  if (mobileMotionControllerVisible) {
+    mobileMotionControllerPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
+    mobileMotionControllerPos.width = MOBILE_MOTION_CONTROLLER_SIZE;
+    mobileMotionControllerPos.height = MOBILE_MOTION_CONTROLLER_SIZE;
+    mobileMotionControllerPos.anchorBottom = 50;
+    mobileMotionControllerPos.anchorLeft = 50;
+    mobileMotionControllerPose.w = MOBILE_MOTION_CONTROLLER_SIZE;
+    mobileMotionControllerPose.h = MOBILE_MOTION_CONTROLLER_SIZE;
+    mobileMotionControllerPose.x = MOBILE_MOTION_CONTROLLER_SIZE;
+    mobileMotionControllerPose.y = 0;
+    mobileMotionControllerTexture = Res_LoadTexture(ctx, "mobile-motion-controller.png");
+  }
 
 }
 
@@ -75,10 +78,12 @@ void Main_Render(struct Nav_Context *ctx) {
     exit(1);
   }
 
-  mobileMotionControllerRect = Pos_CalcAnchored(&mobileMotionControllerPos);
-  if (SDL_RenderCopy(ctx->renderer, mobileMotionControllerTexture, &mobileMotionControllerPose, &mobileMotionControllerRect) != 0) {
-    logError("Main: failed to render mobile motion controller: %s %s", SDL_GetError());
-    exit(1);
+  if (mobileMotionControllerVisible) {
+    mobileMotionControllerRect = Pos_CalcAnchored(&mobileMotionControllerPos);
+    if (SDL_RenderCopy(ctx->renderer, mobileMotionControllerTexture, &mobileMotionControllerPose, &mobileMotionControllerRect) != 0) {
+      logError("Main: failed to render mobile motion controller: %s %s", SDL_GetError());
+      exit(1);
+    }
   }
 }
 
@@ -92,6 +97,8 @@ void Main_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
 
 
 void Main_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *event) {
+  if (!mobileMotionControllerVisible) return;
+
   if (event->type == NAV_FINGER_EVENT_DOWN &&
       Pos_IsFingerEventInside(&mobileMotionControllerRect, event, ctx) &&
       mobileMotionControllerActive == SDL_FALSE) {
@@ -169,7 +176,9 @@ void Main_Destroy() {
   logInfo("Main: destroying.");
   Res_ReleaseTexture(optionsButtonTexture);
   Res_ReleaseTexture(mainCharacterTexture);
-  Res_ReleaseTexture(mobileMotionControllerTexture);
+  if (mobileMotionControllerVisible) {
+    Res_ReleaseTexture(mobileMotionControllerTexture);
+  }
   Aud_Unload(optionsButtonPress);
 }
 
