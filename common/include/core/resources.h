@@ -10,4 +10,6 @@ SDL_Texture* Res_LoadTexture(struct Nav_Context *ctx, char *filePath);
 
 void Res_ReleaseTexture(SDL_Texture *texture);
 
+char* Res_ReadFully(char *filePath, Uint16 chunkSize);
+
 #endif

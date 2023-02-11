@@ -31,6 +31,8 @@ SDL_bool mobileMotionControllerActive = SDL_FALSE;
 #define MOBILE_MOTION_CONTROLLER_IDLE_THRESHOLD 75
 #define MOBILE_MOTION_CONTROLLER_SIZE 400
 
+char *map = NULL;
+
 
 void Main_Init(struct Nav_Context *ctx) {
   logInfo("Main: initializing.");
@@ -66,6 +68,10 @@ void Main_Init(struct Nav_Context *ctx) {
     mobileMotionControllerPose.y = 0;
     mobileMotionControllerTexture = Res_LoadTexture(ctx, "mobile-motion-controller.png");
   }
+
+  map = Res_ReadFully("map.txt", 128);
+
+  logInfo("Map:\n\n%s", map);
 
 }
 
@@ -252,7 +258,7 @@ void Main_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *eve
 
 void Main_HandleKeyboardEvent(struct Nav_Context *ctx, struct Nav_KeyboardEvent *event) {
   switch (event->type) {
-    case NAV_FINGER_EVENT_TYPE_DOWN:
+    case NAV_KEYBOARD_EVENT_TYPE_DOWN:
       switch (event->key) {
         case SDLK_UP:
           mainCharacterWalkingNorth = SDL_TRUE;
@@ -270,7 +276,7 @@ void Main_HandleKeyboardEvent(struct Nav_Context *ctx, struct Nav_KeyboardEvent 
           break;
       }
       break;
-    case NAV_FINGER_EVENT_TYPE_UP:
+    case NAV_KEYBOARD_EVENT_TYPE_UP:
     default:
       switch (event->key) {
         case SDLK_UP:
@@ -300,6 +306,7 @@ void Main_Destroy() {
   if (mobileMotionControllerVisible) {
     Res_ReleaseTexture(mobileMotionControllerTexture);
   }
+  SDL_free(map);
   Aud_Unload(optionsButtonPress);
 }
 
