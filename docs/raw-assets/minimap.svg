@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="240"
+   height="240"
+   viewBox="0 0 63.499998 63.499998"
+   version="1.1"
+   id="svg693"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="minimap.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview695"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="1"
+     inkscape:cx="196"
+     inkscape:cy="307"
+     inkscape:window-width="1918"
+     inkscape:window-height="1171"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs690" />
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.320583;paint-order:fill markers stroke;stop-color:#000000"
+       id="rect866"
+       width="5.2916665"
+       height="63.499996"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.310283;paint-order:fill markers stroke;stop-color:#000000"
+       id="rect866-5"
+       width="63.189716"
+       height="4.9813833"
+       x="0.1551415"
+       y="0.1551415" />
+    <rect
+       style="fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.320585;paint-order:fill markers stroke;stop-color:#000000"
+       id="rect866-5-6"
+       width="63.499996"
+       height="5.2916665"
+       x="0"
+       y="58.208332" />
+    <rect
+       style="fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.320583;paint-order:fill markers stroke;stop-color:#000000"
+       id="rect866-3"
+       width="5.2916665"
+       height="63.499996"
+       x="58.208332"
+       y="0" />
+  </g>
+</svg>

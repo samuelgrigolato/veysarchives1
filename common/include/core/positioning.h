@@ -6,6 +6,9 @@
 
 #include "core/navigation.h"
 
+#define POS_BASE_DISPLAY_HEIGHT 900.0
+#define POS_BASE_DISPLAY_WIDTH 2100.0
+
 typedef enum {
   POS_ANCHOR_TOP = 1,
   POS_ANCHOR_BOTTOM = 2,
