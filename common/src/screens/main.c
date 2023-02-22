@@ -227,11 +227,13 @@ void Main_Render(struct Nav_Context *ctx) {
   Sint32 highestMinimapRow = playerCellY - (MINIMAP_ROWS / 2);
   for (uint8_t row = 0; row < MINIMAP_ROWS; row++) {
     for (uint8_t column = 0; column < MINIMAP_COLUMNS; column++) {
-      SDL_Rect minimapCell;
-      minimapCell.w = MINIMAP_CELL_SIZE;
-      minimapCell.h = MINIMAP_CELL_SIZE;
-      minimapCell.x = minimapRect.x + 20 + column * MINIMAP_CELL_SIZE;
-      minimapCell.y = minimapRect.y + 20 + row * MINIMAP_CELL_SIZE;
+
+      struct Pos_AnchoredElement minimapCellPos;
+      minimapCellPos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_RIGHT;
+      minimapCellPos.width = MINIMAP_CELL_SIZE;
+      minimapCellPos.height = MINIMAP_CELL_SIZE;
+      minimapCellPos.anchorTop = 40 + row * MINIMAP_CELL_SIZE;
+      minimapCellPos.anchorRight = 40 + (MINIMAP_COLUMNS - column) * MINIMAP_CELL_SIZE;
 
       Uint8 cellR = 0;
       Uint8 cellG = 0;
@@ -256,6 +258,7 @@ void Main_Render(struct Nav_Context *ctx) {
       }
       SDL_SetRenderDrawColor(ctx->renderer, cellR, cellG, cellB, 255);
 
+      SDL_Rect minimapCell = Pos_CalcAnchored(&minimapCellPos);
       SDL_RenderFillRect(ctx->renderer, &minimapCell);
     }
   }

@@ -53,4 +53,5 @@ void Nav_UpdateModel(Uint64 elapsedTime) {
 void Nav_Render() {
   relayout();
   current->render(&ctx);
+  Pos_RenderLetterBox(&ctx);
 }

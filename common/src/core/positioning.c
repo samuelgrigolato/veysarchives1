@@ -132,3 +132,19 @@ SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEven
     y >= calculatedRect->y &&
     y <= calculatedRect->y + calculatedRect->h;
 }
+
+void Pos_RenderLetterBox(struct Nav_Context *ctx) {
+  SDL_SetRenderDrawColor(ctx->renderer, 0, 0, 0, 255);
+  if (usefulArea.x > 0) {
+    SDL_Rect leftStripe = { 0, 0, usefulArea.x, ctx->windowHeight };
+    SDL_RenderFillRect(ctx->renderer, &leftStripe);
+    SDL_Rect rightStripe = { usefulArea.x + usefulArea.w, 0, ctx->windowWidth - usefulArea.x - usefulArea.w, ctx->windowHeight };
+    SDL_RenderFillRect(ctx->renderer, &rightStripe);
+  }
+  if (usefulArea.y > 0) {
+    SDL_Rect topStripe = { 0, 0, ctx->windowWidth, usefulArea.y };
+    SDL_RenderFillRect(ctx->renderer, &topStripe);
+    SDL_Rect bottomStripe = { 0, usefulArea.y + usefulArea.h, ctx->windowWidth, ctx->windowHeight - usefulArea.y - usefulArea.h };
+    SDL_RenderFillRect(ctx->renderer, &bottomStripe);
+  }
+}
