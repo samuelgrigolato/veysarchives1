@@ -22,7 +22,7 @@ float zoom;
 #define POS_MIN_SUPPORTED_ASPECT_RATIO (1600.0 / 900.0)
 
 
-Sint32 zoomed(Sint32 base) {
+float zoomed(Sint32 base) {
   return base * zoom;
 }
 
@@ -77,17 +77,17 @@ void Pos_Relayout(struct Nav_Context *navCtx) {
 
 SDL_Rect Pos_CalcAnchored(struct Pos_AnchoredElement *el) {
   SDL_Rect result;
-  result.w = zoomed(el->width);
-  result.h = zoomed(el->height);
+  result.w = SDL_ceilf(zoomed(el->width));
+  result.h = SDL_ceilf(zoomed(el->height));
 
   if ((el->anchors & POS_ANCHOR_LEFT) == POS_ANCHOR_LEFT) {
     result.x = usefulArea.x + zoomed(el->anchorLeft);
   } else if ((el->anchors & POS_ANCHOR_RIGHT) == POS_ANCHOR_RIGHT) {
     result.x = usefulArea.x + usefulArea.w - zoomed(el->anchorRight) - result.w;
   } else if ((el->anchors & POS_ANCHOR_CENTER_LEFT) == POS_ANCHOR_CENTER_LEFT) {
-    result.x = usefulArea.x + (usefulArea.w / 2.0) + zoomed(el->anchorCenterLeft);
+    result.x = usefulArea.x + usefulArea.w / 2.0 + zoomed(el->anchorCenterLeft);
   } else if ((el->anchors & POS_ANCHOR_CENTER_RIGHT) == POS_ANCHOR_CENTER_RIGHT) {
-    result.x = usefulArea.x + (usefulArea.w / 2.0) - zoomed(el->anchorCenterRight) - result.w;
+    result.x = usefulArea.x + usefulArea.w / 2.0 - zoomed(el->anchorCenterRight) - result.w;
   }
 
   if ((el->anchors & POS_ANCHOR_TOP) == POS_ANCHOR_TOP) {

@@ -233,7 +233,7 @@ void Main_Render(struct Nav_Context *ctx) {
       minimapCellPos.width = MINIMAP_CELL_SIZE;
       minimapCellPos.height = MINIMAP_CELL_SIZE;
       minimapCellPos.anchorTop = 40 + row * MINIMAP_CELL_SIZE;
-      minimapCellPos.anchorRight = 40 + (MINIMAP_COLUMNS - column) * MINIMAP_CELL_SIZE;
+      minimapCellPos.anchorRight = 40 + (MINIMAP_COLUMNS - column - 1) * MINIMAP_CELL_SIZE;
 
       Uint8 cellR = 0;
       Uint8 cellG = 0;
