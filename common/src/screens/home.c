@@ -6,22 +6,22 @@
 #include "core/resources.h"
 #include "core/audio.h"
 #include "screens/home.h"
-#include "screens/main.h"
+#include "screens/world/world.h"
 
 
 struct Pos_AnchoredElement newGameButtonPos;
-struct Pos_AnchoredElement continueButtonPos;
-
 SDL_Rect newGameButtonRect;
-SDL_Rect continueButtonRect;
-
-SDL_Texture *backgroundTexture;
 SDL_Texture *newGameButtonTexture;
+
+struct Pos_AnchoredElement continueButtonPos;
+SDL_Rect continueButtonRect;
 SDL_Texture *continueButtonTexture;
 
+SDL_Texture *backgroundTexture;
 Aud_SoundID backgroundMusic;
-Aud_SoundID buttonPress;
 Aud_EntryID backgroundMusicEntry;
+
+Aud_SoundID buttonPress;
 
 
 void Home_Init(struct Nav_Context *ctx) {
@@ -32,16 +32,16 @@ void Home_Init(struct Nav_Context *ctx) {
   newGameButtonPos.height = 100;
   newGameButtonPos.anchorBottom = 200;
   newGameButtonPos.anchorCenterRight = 100;
+  newGameButtonTexture = Res_LoadTexture(ctx, "new-game-button.png");
 
   continueButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_LEFT;
   continueButtonPos.width = 400;
   continueButtonPos.height = 100;
   continueButtonPos.anchorBottom = 200;
   continueButtonPos.anchorCenterLeft = 100;
+  continueButtonTexture = Res_LoadTexture(ctx, "continue-button.png");
 
   backgroundTexture = Res_LoadTexture(ctx, "home-background.png");
-  newGameButtonTexture = Res_LoadTexture(ctx, "new-game-button.png");
-  continueButtonTexture = Res_LoadTexture(ctx, "continue-button.png");
 
   backgroundMusic = Aud_Load("home-background.wav");
   backgroundMusicEntry = Aud_FadeInAndRepeat(backgroundMusic);
@@ -81,7 +81,7 @@ void Home_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
   if (Pos_IsInside(&newGameButtonRect, pos) || Pos_IsInside(&continueButtonRect, pos)) {
     Aud_PlayOnce(buttonPress);
     Aud_FadeOutAndStop(backgroundMusicEntry);
-    Nav_GoTo(Main_GetScreen());
+    Nav_GoTo(World_GetScreen());
   }
 }
 

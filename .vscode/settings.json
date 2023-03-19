@@ -20,6 +20,9 @@
     "platform.h": "c",
     "audio.h": "c",
     "source_location": "c",
-    "any": "c"
+    "any": "c",
+    "options-button.h": "c",
+    "main-character.h": "c",
+    "map.h": "c"
   }
 }
