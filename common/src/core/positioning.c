@@ -17,6 +17,9 @@ static SDL_Rect usefulArea;
 */
 static float zoom;
 
+static Sint32 windowWidth;
+static Sint32 windowHeight;
+
 
 #define POS_MAX_SUPPORTED_ASPECT_RATIO (2100.0 / 900.0)
 #define POS_MIN_SUPPORTED_ASPECT_RATIO (1600.0 / 900.0)
@@ -27,14 +30,17 @@ static float zoomed(Sint32 base) {
 }
 
 
-void Pos_Relayout(Nav_Context *navCtx) {
+void Pos_Relayout(Sint32 freshWindowWidth, Sint32 freshWindowHeight) {
 
-  float displayAspectRatio = (float)navCtx->windowWidth / navCtx->windowHeight;
+  windowWidth = freshWindowWidth;
+  windowHeight = freshWindowHeight;
+
+  float displayAspectRatio = (float)windowWidth / windowHeight;
 
   usefulArea.x = 0;
   usefulArea.y = 0;
-  usefulArea.h = navCtx->windowHeight;
-  usefulArea.w = navCtx->windowWidth;
+  usefulArea.h = windowHeight;
+  usefulArea.w = windowWidth;
 
   float effectiveAspectRatio;
   if (displayAspectRatio < POS_MIN_SUPPORTED_ASPECT_RATIO) {
@@ -46,7 +52,7 @@ void Pos_Relayout(Nav_Context *navCtx) {
     effectiveAspectRatio = POS_MIN_SUPPORTED_ASPECT_RATIO;
 
     usefulArea.h = usefulArea.w / effectiveAspectRatio;
-    Sint32 stripeHeight = (navCtx->windowHeight - usefulArea.h) / 2.0;
+    Sint32 stripeHeight = (windowHeight - usefulArea.h) / 2.0;
 
     usefulArea.y = stripeHeight;
 
@@ -59,7 +65,7 @@ void Pos_Relayout(Nav_Context *navCtx) {
     effectiveAspectRatio = POS_MAX_SUPPORTED_ASPECT_RATIO;
 
     usefulArea.w = usefulArea.h * effectiveAspectRatio;
-    Sint32 stripeWidth = (navCtx->windowWidth - usefulArea.w) / 2.0;
+    Sint32 stripeWidth = (windowWidth - usefulArea.w) / 2.0;
 
     usefulArea.x = stripeWidth;
 
@@ -116,7 +122,7 @@ SDL_Rect Pos_CalcCover() {
 }
 
 
-SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Nav_ClickTap *pos) {
+SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Input_ClickTap *pos) {
   return pos->x >= calculatedRect->x &&
     pos->x <= calculatedRect->x + calculatedRect->w &&
     pos->y >= calculatedRect->y &&
@@ -124,27 +130,27 @@ SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Nav_ClickTap *pos) {
 }
 
 
-SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Nav_FingerEvent *event, Nav_Context *ctx) {
-  Sint32 x = ctx->windowWidth * event->nx;
-  Sint32 y = ctx->windowHeight * event->ny;
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Input_FingerEvent *event) {
+  Sint32 x = windowWidth * event->nx;
+  Sint32 y = windowHeight * event->ny;
   return x >= calculatedRect->x &&
     x <= calculatedRect->x + calculatedRect->w &&
     y >= calculatedRect->y &&
     y <= calculatedRect->y + calculatedRect->h;
 }
 
-void Pos_RenderLetterBox(Nav_Context *ctx) {
-  SDL_SetRenderDrawColor(ctx->renderer, 0, 0, 0, 255);
+void Pos_RenderLetterBox(SDL_Renderer *renderer) {
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   if (usefulArea.x > 0) {
-    SDL_Rect leftStripe = { 0, 0, usefulArea.x, ctx->windowHeight };
-    SDL_RenderFillRect(ctx->renderer, &leftStripe);
-    SDL_Rect rightStripe = { usefulArea.x + usefulArea.w, 0, ctx->windowWidth - usefulArea.x - usefulArea.w, ctx->windowHeight };
-    SDL_RenderFillRect(ctx->renderer, &rightStripe);
+    SDL_Rect leftStripe = { 0, 0, usefulArea.x, windowHeight };
+    SDL_RenderFillRect(renderer, &leftStripe);
+    SDL_Rect rightStripe = { usefulArea.x + usefulArea.w, 0, windowWidth - usefulArea.x - usefulArea.w, windowHeight };
+    SDL_RenderFillRect(renderer, &rightStripe);
   }
   if (usefulArea.y > 0) {
-    SDL_Rect topStripe = { 0, 0, ctx->windowWidth, usefulArea.y };
-    SDL_RenderFillRect(ctx->renderer, &topStripe);
-    SDL_Rect bottomStripe = { 0, usefulArea.y + usefulArea.h, ctx->windowWidth, ctx->windowHeight - usefulArea.y - usefulArea.h };
-    SDL_RenderFillRect(ctx->renderer, &bottomStripe);
+    SDL_Rect topStripe = { 0, 0, windowWidth, usefulArea.y };
+    SDL_RenderFillRect(renderer, &topStripe);
+    SDL_Rect bottomStripe = { 0, usefulArea.y + usefulArea.h, windowWidth, windowHeight - usefulArea.y - usefulArea.h };
+    SDL_RenderFillRect(renderer, &bottomStripe);
   }
 }

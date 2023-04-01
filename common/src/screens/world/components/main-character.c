@@ -1,3 +1,4 @@
+#include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/log.h"
 #include "core/resources.h"
@@ -120,9 +121,9 @@ void World_MainCharacter_SetWalkingDirections(MaybeBool north, MaybeBool south, 
 }
 
 
-void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent *event) {
+void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Input_KeyboardEvent *event) {
   switch (event->type) {
-    case NAV_KEYBOARD_EVENT_TYPE_DOWN:
+    case INPUT_KEYBOARD_EVENT_TYPE_DOWN:
       switch (event->key) {
         case SDLK_UP:
           walkingNorth = SDL_TRUE;
@@ -140,7 +141,7 @@ void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent
           break;
       }
       break;
-    case NAV_KEYBOARD_EVENT_TYPE_UP:
+    case INPUT_KEYBOARD_EVENT_TYPE_UP:
     default:
       switch (event->key) {
         case SDLK_UP:

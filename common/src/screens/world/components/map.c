@@ -1,3 +1,4 @@
+#include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/audio.h"
 #include "core/log.h"

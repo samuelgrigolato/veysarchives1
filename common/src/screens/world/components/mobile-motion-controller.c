@@ -1,4 +1,5 @@
 #include "core/log.h"
+#include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/resources.h"
 #include "screens/world/components/main-character.h"
@@ -43,7 +44,7 @@ void World_MobileMotionController_Render(Nav_Context *ctx) {
 }
 
 
-void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
+void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event) {
   if (!visible) return;
 
   MaybeBool mainCharacterWalkingNorth = MaybeBool_EMPTY,
@@ -51,15 +52,15 @@ void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_Finger
     mainCharacterWalkingWest = MaybeBool_EMPTY,
     mainCharacterWalkingEast = MaybeBool_EMPTY;
 
-  if (event->type == NAV_FINGER_EVENT_TYPE_DOWN &&
-      Pos_IsFingerEventInside(&rect, event, ctx) &&
+  if (event->type == INPUT_FINGER_EVENT_TYPE_DOWN &&
+      Pos_IsFingerEventInside(&rect, event) &&
       active == SDL_FALSE) {
 
     active = SDL_TRUE;
     pose.x = 0;
     pose.y = 0;
 
-  } else if (event->type == NAV_FINGER_EVENT_TYPE_UP &&
+  } else if (event->type == INPUT_FINGER_EVENT_TYPE_UP &&
              active == SDL_TRUE) {
 
     active = SDL_FALSE;
@@ -70,7 +71,7 @@ void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_Finger
     mainCharacterWalkingWest = MaybeBool_FALSE;
     mainCharacterWalkingEast = MaybeBool_FALSE;
 
-  } else if (active == SDL_TRUE) { // NAV_FINGER_EVENT_MOTION
+  } else if (active == SDL_TRUE) { // INPUT_FINGER_EVENT_MOTION
 
     Sint32 eventX = ctx->windowWidth * event->nx;
     Sint32 eventY = ctx->windowHeight * event->ny;

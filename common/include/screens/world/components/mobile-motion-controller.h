@@ -7,7 +7,7 @@ void World_MobileMotionController_Init(Nav_Context *ctx);
 
 void World_MobileMotionController_Render(Nav_Context *ctx);
 
-void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event);
+void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event);
 
 void World_MobileMotionController_Destroy();
 

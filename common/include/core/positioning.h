@@ -3,8 +3,7 @@
 
 #include "platform.h"
 #include <SDL.h>
-
-#include "core/navigation.h"
+#include "core/input.h"
 
 #define POS_BASE_DISPLAY_HEIGHT 900.0
 #define POS_BASE_DISPLAY_WIDTH 2100.0
@@ -38,7 +37,7 @@ typedef struct {
 
 } Pos_AnchoredElement;
 
-void Pos_Relayout(Nav_Context *navCtx);
+void Pos_Relayout(Sint32 windowWidth, Sint32 windowHeight);
 
 SDL_Rect Pos_CalcAnchored(Pos_AnchoredElement *el);
 
@@ -49,10 +48,10 @@ SDL_Rect Pos_CalcAnchored(Pos_AnchoredElement *el);
 */
 SDL_Rect Pos_CalcCover();
 
-SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Nav_ClickTap *pos);
+SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Input_ClickTap *pos);
 
-SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Nav_FingerEvent *event, Nav_Context *ctx);
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Input_FingerEvent *event);
 
-void Pos_RenderLetterBox(Nav_Context *ctx);
+void Pos_RenderLetterBox(SDL_Renderer *renderer);
 
 #endif

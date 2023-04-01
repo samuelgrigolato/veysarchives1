@@ -1,4 +1,5 @@
 #include "core/log.h"
+#include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/resources.h"
 #include "core/audio.h"
@@ -36,17 +37,17 @@ void World_Render(Nav_Context *ctx) {
 }
 
 
-void World_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
+void World_HandleClickTap(Nav_Context *ctx, Input_ClickTap *pos) {
   World_OptionsButton_HandleClickTap(ctx, pos);
 }
 
 
-void World_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
+void World_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event) {
   World_MobileMotionController_HandleFingerEvent(ctx, event);
 }
 
 
-void World_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent *event) {
+void World_HandleKeyboardEvent(Nav_Context *ctx, Input_KeyboardEvent *event) {
   World_MainCharacter_HandleKeyboardEvent(ctx, event);
 }
 

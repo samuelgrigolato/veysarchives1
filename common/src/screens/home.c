@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "core/log.h"
+#include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/resources.h"
 #include "core/audio.h"
@@ -77,7 +78,7 @@ void Home_Render(Nav_Context *ctx) {
 }
 
 
-void Home_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
+void Home_HandleClickTap(Nav_Context *ctx, Input_ClickTap *pos) {
   if (Pos_IsInside(&newGameButtonRect, pos) || Pos_IsInside(&continueButtonRect, pos)) {
     Aud_PlayOnce(buttonPress);
     Aud_FadeOutAndStop(backgroundMusicEntry);
@@ -86,11 +87,11 @@ void Home_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
 }
 
 
-void Home_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
+void Home_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event) {
 }
 
 
-void Home_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent *event) {
+void Home_HandleKeyboardEvent(Nav_Context *ctx, Input_KeyboardEvent *event) {
 }
 
 

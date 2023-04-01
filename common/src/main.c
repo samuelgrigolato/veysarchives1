@@ -5,6 +5,7 @@
 #include "core/navigation.h"
 #include "core/positioning.h"
 #include "core/audio.h"
+#include "core/input.h"
 #include "screens/home.h"
 
 
@@ -20,17 +21,17 @@ static void logDisplayInfo(SDL_Window *window) {
 
 
 static void handleFingerEvent(SDL_Event *event) {
-  Nav_FingerEvent fingerEvent;
+  Input_FingerEvent fingerEvent;
   switch (event->type) {
     case SDL_FINGERDOWN:
-      fingerEvent.type = NAV_FINGER_EVENT_TYPE_DOWN;
+      fingerEvent.type = INPUT_FINGER_EVENT_TYPE_DOWN;
       break;
     case SDL_FINGERMOTION:
-      fingerEvent.type = NAV_FINGER_EVENT_TYPE_MOTION;
+      fingerEvent.type = INPUT_FINGER_EVENT_TYPE_MOTION;
       break;
     case SDL_FINGERUP:
     default:
-      fingerEvent.type = NAV_FINGER_EVENT_TYPE_UP;
+      fingerEvent.type = INPUT_FINGER_EVENT_TYPE_UP;
       break;
   }
   fingerEvent.nx = event->tfinger.x;
@@ -40,14 +41,14 @@ static void handleFingerEvent(SDL_Event *event) {
 
 
 static void handleKeyboardEvent(SDL_Event *event) {
-  Nav_KeyboardEvent keyboardEvent;
+  Input_KeyboardEvent keyboardEvent;
   switch (event->type) {
     case SDL_KEYDOWN:
-      keyboardEvent.type = NAV_KEYBOARD_EVENT_TYPE_DOWN;
+      keyboardEvent.type = INPUT_KEYBOARD_EVENT_TYPE_DOWN;
       break;
     case SDL_FINGERUP:
     default:
-      keyboardEvent.type = NAV_KEYBOARD_EVENT_TYPE_UP;
+      keyboardEvent.type = INPUT_KEYBOARD_EVENT_TYPE_UP;
       break;
   }
   keyboardEvent.key = event->key.keysym.sym;
@@ -101,7 +102,7 @@ int main(int argc, char* argv[]) {
         running = 0;
       } else if (event.type == SDL_MOUSEBUTTONUP) {
         if (event.button.button == SDL_BUTTON_LEFT) {
-          Nav_ClickTap pos;
+          Input_ClickTap pos;
           pos.x = event.button.x;
           pos.y = event.button.y;
           Nav_HandleClickTap(&pos);

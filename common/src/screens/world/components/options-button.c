@@ -32,7 +32,7 @@ void World_OptionsButton_Render(Nav_Context *ctx) {
 }
 
 
-void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
+void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Input_ClickTap *pos) {
   if (Pos_IsInside(&rect, pos)) {
     Aud_PlayOnce(press);
     Nav_GoTo(Home_GetScreen());

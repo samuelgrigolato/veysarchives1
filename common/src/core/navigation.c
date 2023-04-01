@@ -8,7 +8,7 @@ static Nav_Context ctx;
 
 static void relayout() {
   SDL_GetWindowSize(ctx.window, &ctx.windowWidth, &ctx.windowHeight);
-  Pos_Relayout(&ctx);
+  Pos_Relayout(ctx.windowWidth, ctx.windowHeight);
 }
 
 
@@ -21,17 +21,17 @@ void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, Nav_Screen *initial) {
 }
 
 
-void Nav_HandleClickTap(Nav_ClickTap *pos) {
+void Nav_HandleClickTap(Input_ClickTap *pos) {
   current->handleClickTap(&ctx, pos);
 }
 
 
-void Nav_HandleFingerEvent(Nav_FingerEvent *event) {
+void Nav_HandleFingerEvent(Input_FingerEvent *event) {
   current->handleFingerEvent(&ctx, event);
 }
 
 
-void Nav_HandleKeyboardEvent(Nav_KeyboardEvent *event) {
+void Nav_HandleKeyboardEvent(Input_KeyboardEvent *event) {
   current->handleKeyboardEvent(&ctx, event);
 }
 
@@ -53,5 +53,5 @@ void Nav_UpdateModel(Uint64 elapsedTime) {
 void Nav_Render() {
   relayout();
   current->render(&ctx);
-  Pos_RenderLetterBox(&ctx);
+  Pos_RenderLetterBox(ctx.renderer);
 }

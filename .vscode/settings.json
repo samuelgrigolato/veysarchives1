@@ -23,6 +23,7 @@
     "any": "c",
     "options-button.h": "c",
     "main-character.h": "c",
-    "map.h": "c"
+    "map.h": "c",
+    "input.h": "c"
   }
 }
