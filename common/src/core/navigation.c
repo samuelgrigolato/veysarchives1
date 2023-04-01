@@ -2,8 +2,8 @@
 #include "core/positioning.h"
 
 
-struct Nav_Screen *current;
-struct Nav_Context ctx;
+Nav_Screen *current;
+Nav_Context ctx;
 
 
 void relayout() {
@@ -12,7 +12,7 @@ void relayout() {
 }
 
 
-void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, struct Nav_Screen *initial) {
+void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, Nav_Screen *initial) {
   ctx.renderer = renderer;
   ctx.window = window;
   relayout();
@@ -21,22 +21,22 @@ void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, struct Nav_Screen *ini
 }
 
 
-void Nav_HandleClickTap(struct Nav_ClickTap *pos) {
+void Nav_HandleClickTap(Nav_ClickTap *pos) {
   current->handleClickTap(&ctx, pos);
 }
 
 
-void Nav_HandleFingerEvent(struct Nav_FingerEvent *event) {
+void Nav_HandleFingerEvent(Nav_FingerEvent *event) {
   current->handleFingerEvent(&ctx, event);
 }
 
 
-void Nav_HandleKeyboardEvent(struct Nav_KeyboardEvent *event) {
+void Nav_HandleKeyboardEvent(Nav_KeyboardEvent *event) {
   current->handleKeyboardEvent(&ctx, event);
 }
 
 
-void Nav_GoTo(struct Nav_Screen *next) {
+void Nav_GoTo(Nav_Screen *next) {
   if (current != NULL) {
     current->destroy();
   }

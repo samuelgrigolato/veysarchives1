@@ -20,7 +20,7 @@ void logDisplayInfo(SDL_Window *window) {
 
 
 void handleFingerEvent(SDL_Event *event) {
-  struct Nav_FingerEvent fingerEvent;
+  Nav_FingerEvent fingerEvent;
   switch (event->type) {
     case SDL_FINGERDOWN:
       fingerEvent.type = NAV_FINGER_EVENT_TYPE_DOWN;
@@ -40,7 +40,7 @@ void handleFingerEvent(SDL_Event *event) {
 
 
 void handleKeyboardEvent(SDL_Event *event) {
-  struct Nav_KeyboardEvent keyboardEvent;
+  Nav_KeyboardEvent keyboardEvent;
   switch (event->type) {
     case SDL_KEYDOWN:
       keyboardEvent.type = NAV_KEYBOARD_EVENT_TYPE_DOWN;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
         running = 0;
       } else if (event.type == SDL_MOUSEBUTTONUP) {
         if (event.button.button == SDL_BUTTON_LEFT) {
-          struct Nav_ClickTap pos;
+          Nav_ClickTap pos;
           pos.x = event.button.x;
           pos.y = event.button.y;
           Nav_HandleClickTap(&pos);

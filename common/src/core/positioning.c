@@ -27,7 +27,7 @@ float zoomed(Sint32 base) {
 }
 
 
-void Pos_Relayout(struct Nav_Context *navCtx) {
+void Pos_Relayout(Nav_Context *navCtx) {
 
   float displayAspectRatio = (float)navCtx->windowWidth / navCtx->windowHeight;
 
@@ -75,7 +75,7 @@ void Pos_Relayout(struct Nav_Context *navCtx) {
 }
 
 
-SDL_Rect Pos_CalcAnchored(struct Pos_AnchoredElement *el) {
+SDL_Rect Pos_CalcAnchored(Pos_AnchoredElement *el) {
   SDL_Rect result;
   result.w = SDL_ceilf(zoomed(el->width));
   result.h = SDL_ceilf(zoomed(el->height));
@@ -116,7 +116,7 @@ SDL_Rect Pos_CalcCover() {
 }
 
 
-SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, struct Nav_ClickTap *pos) {
+SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Nav_ClickTap *pos) {
   return pos->x >= calculatedRect->x &&
     pos->x <= calculatedRect->x + calculatedRect->w &&
     pos->y >= calculatedRect->y &&
@@ -124,7 +124,7 @@ SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, struct Nav_ClickTap *pos) {
 }
 
 
-SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEvent *event, struct Nav_Context *ctx) {
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Nav_FingerEvent *event, Nav_Context *ctx) {
   Sint32 x = ctx->windowWidth * event->nx;
   Sint32 y = ctx->windowHeight * event->ny;
   return x >= calculatedRect->x &&
@@ -133,7 +133,7 @@ SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEven
     y <= calculatedRect->y + calculatedRect->h;
 }
 
-void Pos_RenderLetterBox(struct Nav_Context *ctx) {
+void Pos_RenderLetterBox(Nav_Context *ctx) {
   SDL_SetRenderDrawColor(ctx->renderer, 0, 0, 0, 255);
   if (usefulArea.x > 0) {
     SDL_Rect leftStripe = { 0, 0, usefulArea.x, ctx->windowHeight };

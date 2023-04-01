@@ -6,7 +6,7 @@
 #include <SDL_image.h>
 #include "core/navigation.h"
 
-SDL_Texture* Res_LoadTexture(struct Nav_Context *ctx, char *filePath);
+SDL_Texture* Res_LoadTexture(Nav_Context *ctx, char *filePath);
 
 void Res_ReleaseTexture(SDL_Texture *texture);
 

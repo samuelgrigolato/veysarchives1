@@ -4,7 +4,7 @@
 #include "core/navigation.h"
 
 
-struct Nav_Screen* Home_GetScreen();
+Nav_Screen* Home_GetScreen();
 
 
 #endif

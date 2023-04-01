@@ -11,7 +11,7 @@ SDL_Texture *mapCellTextures;
 #define MAP_MAX_VISIBLE_COLUMNS ((POS_BASE_DISPLAY_WIDTH / MAP_CELL_SIZE) + 1)
 
 
-struct Pos_AnchoredElement minimapPos;
+Pos_AnchoredElement minimapPos;
 SDL_Rect minimapRect;
 SDL_Texture *minimapTexture;
 Aud_SoundID minimapPress;
@@ -20,7 +20,7 @@ Aud_SoundID minimapPress;
 #define MINIMAP_COLUMNS (200 / MINIMAP_CELL_SIZE)
 
 
-void World_Map_Init(struct Nav_Context *ctx) {
+void World_Map_Init(Nav_Context *ctx) {
   logInfo("Map: initializing.");
 
   map = Res_ReadFully("map.txt", 128);
@@ -58,7 +58,7 @@ SDL_bool World_Map_IsPassableTile(int row, int column) {
 }
 
 
-void World_Map_Render(struct Nav_Context *ctx, Sint32 *playerPosX, Sint32 *playerPosY) {
+void World_Map_Render(Nav_Context *ctx, Sint32 *playerPosX, Sint32 *playerPosY) {
 
   Sint32 playerCellX = *playerPosX / MAP_CELL_SIZE;
   Sint32 playerCellY = *playerPosY / MAP_CELL_SIZE;
@@ -78,7 +78,7 @@ void World_Map_Render(struct Nav_Context *ctx, Sint32 *playerPosX, Sint32 *playe
         continue;
       }
 
-      struct Pos_AnchoredElement mapCell;
+      Pos_AnchoredElement mapCell;
       mapCell.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
       mapCell.height = MAP_CELL_SIZE;
       mapCell.width = MAP_CELL_SIZE;
@@ -108,7 +108,7 @@ void World_Map_Render(struct Nav_Context *ctx, Sint32 *playerPosX, Sint32 *playe
   for (uint8_t row = 0; row < MINIMAP_ROWS; row++) {
     for (uint8_t column = 0; column < MINIMAP_COLUMNS; column++) {
 
-      struct Pos_AnchoredElement minimapCellPos;
+      Pos_AnchoredElement minimapCellPos;
       minimapCellPos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_RIGHT;
       minimapCellPos.width = MINIMAP_CELL_SIZE;
       minimapCellPos.height = MINIMAP_CELL_SIZE;

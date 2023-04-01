@@ -9,11 +9,11 @@ typedef enum {
   MaybeBool_EMPTY
 } MaybeBool;
 
-void World_MainCharacter_Init(struct Nav_Context *ctx);
+void World_MainCharacter_Init(Nav_Context *ctx);
 
 void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sint32 *playerPosY);
 
-void World_MainCharacter_Render(struct Nav_Context *ctx);
+void World_MainCharacter_Render(Nav_Context *ctx);
 
 void World_MainCharacter_SetWalkingDirections(MaybeBool north, MaybeBool south, MaybeBool west, MaybeBool east);
 

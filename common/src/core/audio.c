@@ -2,7 +2,7 @@
 #include "core/log.h"
 
 
-struct PlayingSoundNode {
+typedef struct PlayingSoundNode {
   Uint32 entryId;
   Uint8 *data;
   Uint32 pos;
@@ -11,26 +11,26 @@ struct PlayingSoundNode {
   SDL_bool repeat;
   SDL_bool stopping;
   struct PlayingSoundNode *next;
-};
+} PlayingSoundNode;
 
 
-struct LoadedSoundNode {
+typedef struct LoadedSoundNode {
   Aud_SoundID id;
   Uint8 *data;
   Uint32 length;
   struct LoadedSoundNode *next;
-};
+} LoadedSoundNode;
 
 
 Aud_EntryID nextEntryId = 0;
-struct PlayingSoundNode *playingSounds = NULL;
-struct LoadedSoundNode *loadedSounds = NULL;
+PlayingSoundNode *playingSounds = NULL;
+LoadedSoundNode *loadedSounds = NULL;
 SDL_AudioDeviceID device;
 void onAudioDeviceCallback(void *userData, Uint8* stream, int len);
 
 
-struct LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
-  struct LoadedSoundNode *current = loadedSounds;
+LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
+  LoadedSoundNode *current = loadedSounds;
   while (current != NULL) {
     if (current->id == soundId) {
       return current;
@@ -42,12 +42,12 @@ struct LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
 
 
 Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
-  struct LoadedSoundNode *sound = findLoadedSound(soundId);
+  LoadedSoundNode *sound = findLoadedSound(soundId);
   if (sound == NULL) {
     logError("Audio: tried to play an unloaded sound. soundId=%u", soundId);
   }
 
-  struct PlayingSoundNode *newNode = SDL_malloc(sizeof(struct PlayingSoundNode));
+  PlayingSoundNode *newNode = SDL_malloc(sizeof(PlayingSoundNode));
   newNode->entryId = nextEntryId++;
   newNode->data = SDL_malloc(sound->length);
   SDL_memcpy(newNode->data, sound->data, sound->length);
@@ -66,8 +66,8 @@ Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
 }
 
 
-struct PlayingSoundNode* findPlayingSound(Aud_EntryID entryId) {
-  struct PlayingSoundNode *playingSound = playingSounds;
+PlayingSoundNode* findPlayingSound(Aud_EntryID entryId) {
+  PlayingSoundNode *playingSound = playingSounds;
   while (playingSound != NULL) {
     if (playingSound->entryId == entryId) {
       return playingSound;
@@ -108,7 +108,7 @@ Aud_SoundID findAvailableSoundId() {
 
 
 Aud_SoundID Aud_Load(char *filePath) {
-  struct LoadedSoundNode *loadedSound = SDL_malloc(sizeof(struct LoadedSoundNode));
+  LoadedSoundNode *loadedSound = SDL_malloc(sizeof(LoadedSoundNode));
   loadedSound->id = findAvailableSoundId();
 
   logInfo("Audio: loading %s as %u", filePath, loadedSound->id);
@@ -145,9 +145,9 @@ Aud_SoundID Aud_Load(char *filePath) {
 
 
 void Aud_Unload(Aud_SoundID soundId) {
-  struct LoadedSoundNode **linkedListNode = &loadedSounds;
+  LoadedSoundNode **linkedListNode = &loadedSounds;
   while (*linkedListNode != NULL) {
-    struct LoadedSoundNode *loadedSound = *linkedListNode;
+    LoadedSoundNode *loadedSound = *linkedListNode;
 
     if (loadedSound->id == soundId) {
       SDL_FreeWAV(loadedSound->data);
@@ -176,7 +176,7 @@ Aud_EntryID Aud_FadeInAndRepeat(Aud_SoundID soundId) {
 void Aud_FadeOutAndStop(Aud_EntryID entryId) {
   logInfo("Audio: fading entryID=%u out", entryId);
   SDL_LockAudioDevice(device);
-  struct PlayingSoundNode *playingSound = findPlayingSound(entryId);
+  PlayingSoundNode *playingSound = findPlayingSound(entryId);
   if (playingSound != NULL) {
     playingSound->stopping = SDL_TRUE;
   }
@@ -197,9 +197,9 @@ void onAudioDeviceCallback(void *userData, Uint8 *stream, int len) {
     stream[i] = 0; // silence
   }
 
-  struct PlayingSoundNode **linkedListNode = &playingSounds;
+  PlayingSoundNode **linkedListNode = &playingSounds;
   while (*linkedListNode != NULL) {
-    struct PlayingSoundNode *playingSound = *linkedListNode; // this is a linked list get value operation
+    PlayingSoundNode *playingSound = *linkedListNode; // this is a linked list get value operation
 
     int remaining = playingSound->length - playingSound->pos;
     int bytesPlayed = SDL_min(len, remaining);

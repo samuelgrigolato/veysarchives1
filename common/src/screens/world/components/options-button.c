@@ -6,13 +6,13 @@
 #include "screens/world/components/options-button.h"
 
 
-static struct Pos_AnchoredElement optionsButtonPos;
-static SDL_Rect optionsButtonRect;
-static SDL_Texture *optionsButtonTexture;
-static Aud_SoundID optionsButtonPress;
+Pos_AnchoredElement optionsButtonPos;
+SDL_Rect optionsButtonRect;
+SDL_Texture *optionsButtonTexture;
+Aud_SoundID optionsButtonPress;
 
 
-void World_OptionsButton_Init(struct Nav_Context *ctx) {
+void World_OptionsButton_Init(Nav_Context *ctx) {
   optionsButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
   optionsButtonPos.width = 100;
   optionsButtonPos.height = 100;
@@ -23,7 +23,7 @@ void World_OptionsButton_Init(struct Nav_Context *ctx) {
 }
 
 
-void World_OptionsButton_Render(struct Nav_Context *ctx) {
+void World_OptionsButton_Render(Nav_Context *ctx) {
   optionsButtonRect = Pos_CalcAnchored(&optionsButtonPos);
   if (SDL_RenderCopy(ctx->renderer, optionsButtonTexture, NULL, &optionsButtonRect) != 0) {
     logError("OptionsButton: failed to render: %s %s", SDL_GetError());
@@ -32,7 +32,7 @@ void World_OptionsButton_Render(struct Nav_Context *ctx) {
 }
 
 
-void World_OptionsButton_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
+void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
   if (Pos_IsInside(&optionsButtonRect, pos)) {
     Aud_PlayOnce(optionsButtonPress);
     Nav_GoTo(Home_GetScreen());

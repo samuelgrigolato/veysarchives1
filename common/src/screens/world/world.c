@@ -14,7 +14,7 @@ Sint32 playerPosX = 100;
 Sint32 playerPosY = 100;
 
 
-void World_Init(struct Nav_Context *ctx) {
+void World_Init(Nav_Context *ctx) {
   logInfo("World: initializing.");
   World_MainCharacter_Init(ctx);
   World_OptionsButton_Init(ctx);
@@ -28,7 +28,7 @@ void World_UpdateModel(Uint64 elapsedTime) {
 }
 
 
-void World_Render(struct Nav_Context *ctx) {
+void World_Render(Nav_Context *ctx) {
   World_Map_Render(ctx, &playerPosX, &playerPosY);
   World_MainCharacter_Render(ctx);
   World_OptionsButton_Render(ctx);
@@ -36,17 +36,17 @@ void World_Render(struct Nav_Context *ctx) {
 }
 
 
-void World_HandleClickTap(struct Nav_Context *ctx, struct Nav_ClickTap *pos) {
+void World_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
   World_OptionsButton_HandleClickTap(ctx, pos);
 }
 
 
-void World_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *event) {
+void World_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
   World_MobileMotionController_HandleFingerEvent(ctx, event);
 }
 
 
-void World_HandleKeyboardEvent(struct Nav_Context *ctx, struct Nav_KeyboardEvent *event) {
+void World_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent *event) {
   World_MainCharacter_HandleKeyboardEvent(ctx, event);
 }
 
@@ -60,10 +60,10 @@ void World_Destroy() {
 }
 
 
-struct Nav_Screen* World_GetScreen() {
-  static struct Nav_Screen *instance = NULL;
+Nav_Screen* World_GetScreen() {
+  static Nav_Screen *instance = NULL;
   if (instance == NULL) {
-    instance = malloc(sizeof(struct Nav_Screen));
+    instance = malloc(sizeof(Nav_Screen));
     instance->init = World_Init;
     instance->updateModel = World_UpdateModel;
     instance->render = World_Render;

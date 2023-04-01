@@ -18,7 +18,7 @@ typedef enum {
   POS_ANCHOR_CENTER_RIGHT = 32
 } Pos_Anchor;
 
-struct Pos_AnchoredElement {
+typedef struct {
 
   /** To be filled as a bitwise of POS_ANCHOR_XXXXX. */
   Pos_Anchor anchors;
@@ -36,11 +36,11 @@ struct Pos_AnchoredElement {
   /** As in a base display, i.e. 900px height. */
   Sint32 height;
 
-};
+} Pos_AnchoredElement;
 
-void Pos_Relayout(struct Nav_Context *navCtx);
+void Pos_Relayout(Nav_Context *navCtx);
 
-SDL_Rect Pos_CalcAnchored(struct Pos_AnchoredElement *el);
+SDL_Rect Pos_CalcAnchored(Pos_AnchoredElement *el);
 
 /**
  * Calculates the correct render rectangle of an image drawn
@@ -49,10 +49,10 @@ SDL_Rect Pos_CalcAnchored(struct Pos_AnchoredElement *el);
 */
 SDL_Rect Pos_CalcCover();
 
-SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, struct Nav_ClickTap *pos);
+SDL_bool Pos_IsInside(SDL_Rect *calculatedRect, Nav_ClickTap *pos);
 
-SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, struct Nav_FingerEvent *event, struct Nav_Context *ctx);
+SDL_bool Pos_IsFingerEventInside(SDL_Rect *calculatedRect, Nav_FingerEvent *event, Nav_Context *ctx);
 
-void Pos_RenderLetterBox(struct Nav_Context *ctx);
+void Pos_RenderLetterBox(Nav_Context *ctx);
 
 #endif

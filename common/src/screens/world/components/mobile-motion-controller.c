@@ -6,7 +6,7 @@
 
 
 SDL_bool mobileMotionControllerVisible = !DESKTOP;
-struct Pos_AnchoredElement mobileMotionControllerPos;
+Pos_AnchoredElement mobileMotionControllerPos;
 SDL_Rect mobileMotionControllerRect;
 SDL_Texture *mobileMotionControllerTexture;
 SDL_Rect mobileMotionControllerPose;
@@ -15,7 +15,7 @@ SDL_bool mobileMotionControllerActive = SDL_FALSE;
 #define MOBILE_MOTION_CONTROLLER_SIZE 400
 
 
-void World_MobileMotionController_Init(struct Nav_Context *ctx) {
+void World_MobileMotionController_Init(Nav_Context *ctx) {
   logInfo("MobileMotionController: initializing.");
   if (mobileMotionControllerVisible) {
     mobileMotionControllerPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
@@ -32,7 +32,7 @@ void World_MobileMotionController_Init(struct Nav_Context *ctx) {
 }
 
 
-void World_MobileMotionController_Render(struct Nav_Context *ctx) {
+void World_MobileMotionController_Render(Nav_Context *ctx) {
   if (mobileMotionControllerVisible) {
     mobileMotionControllerRect = Pos_CalcAnchored(&mobileMotionControllerPos);
     if (SDL_RenderCopy(ctx->renderer, mobileMotionControllerTexture, &mobileMotionControllerPose, &mobileMotionControllerRect) != 0) {
@@ -43,7 +43,7 @@ void World_MobileMotionController_Render(struct Nav_Context *ctx) {
 }
 
 
-void World_MobileMotionController_HandleFingerEvent(struct Nav_Context *ctx, struct Nav_FingerEvent *event) {
+void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
   if (!mobileMotionControllerVisible) return;
 
   MaybeBool mainCharacterWalkingNorth = MaybeBool_EMPTY,
