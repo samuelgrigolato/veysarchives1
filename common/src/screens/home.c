@@ -30,15 +30,15 @@ void Home_Init(struct Nav_Context *ctx) {
   newGameButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_RIGHT;
   newGameButtonPos.width = 400;
   newGameButtonPos.height = 100;
-  newGameButtonPos.anchorBottom = 200;
-  newGameButtonPos.anchorCenterRight = 100;
+  newGameButtonPos.anchorBottom = 90;
+  newGameButtonPos.anchorCenterRight = 110;
   newGameButtonTexture = Res_LoadTexture(ctx, "new-game-button.png");
 
   continueButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_LEFT;
   continueButtonPos.width = 400;
   continueButtonPos.height = 100;
-  continueButtonPos.anchorBottom = 200;
-  continueButtonPos.anchorCenterLeft = 100;
+  continueButtonPos.anchorBottom = 90;
+  continueButtonPos.anchorCenterLeft = 110;
   continueButtonTexture = Res_LoadTexture(ctx, "continue-button.png");
 
   backgroundTexture = Res_LoadTexture(ctx, "home-background.png");
