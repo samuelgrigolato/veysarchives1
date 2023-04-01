@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := main
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/../../../../common/src/main.c
-LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/navigation.c
+LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/game.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/positioning.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/resources.c
 LOCAL_SRC_FILES += $(LOCAL_PATH)/../../../../common/src/core/audio.c

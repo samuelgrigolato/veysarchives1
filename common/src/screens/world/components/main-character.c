@@ -1,4 +1,4 @@
-#include "core/navigation.h"
+#include "core/game.h"
 #include "core/positioning.h"
 #include "core/log.h"
 #include "core/resources.h"
@@ -18,7 +18,7 @@ static Sint32 timeWalking = 0;
 #define MAIN_CHARACTER_SIZE 100
 
 
-void World_MainCharacter_Init(Nav_Context *ctx) {
+void World_MainCharacter_Init(Game_Context *ctx) {
   logInfo("MainCharacter: initializing.");
 
   pos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
@@ -95,7 +95,7 @@ void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sin
 }
 
 
-void World_MainCharacter_Render(Nav_Context *ctx) {
+void World_MainCharacter_Render(Game_Context *ctx) {
 
   rect = Pos_CalcAnchored(&pos);
   if (SDL_RenderCopy(ctx->renderer, texture, &pose, &rect) != 0) {
@@ -121,7 +121,7 @@ void World_MainCharacter_SetWalkingDirections(MaybeBool north, MaybeBool south, 
 }
 
 
-void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Input_KeyboardEvent *event) {
+void World_MainCharacter_HandleKeyboardEvent(Game_Context *ctx, Input_KeyboardEvent *event) {
   switch (event->type) {
     case INPUT_KEYBOARD_EVENT_TYPE_DOWN:
       switch (event->key) {

@@ -1,7 +1,7 @@
 #ifndef SCREENS_WORLD_COMPONENTS_MAIN_CHARACTER_h
 #define SCREENS_WORLD_COMPONENTS_MAIN_CHARACTER_h
 
-#include "core/navigation.h"
+#include "core/game.h"
 
 typedef enum {
   MaybeBool_FALSE,
@@ -9,11 +9,11 @@ typedef enum {
   MaybeBool_EMPTY
 } MaybeBool;
 
-void World_MainCharacter_Init(Nav_Context *ctx);
+void World_MainCharacter_Init(Game_Context *ctx);
 
 void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sint32 *playerPosY);
 
-void World_MainCharacter_Render(Nav_Context *ctx);
+void World_MainCharacter_Render(Game_Context *ctx);
 
 void World_MainCharacter_SetWalkingDirections(MaybeBool north, MaybeBool south, MaybeBool west, MaybeBool east);
 

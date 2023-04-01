@@ -12,7 +12,7 @@ static SDL_Texture *texture;
 static Aud_SoundID press;
 
 
-void World_OptionsButton_Init(Nav_Context *ctx) {
+void World_OptionsButton_Init(Game_Context *ctx) {
   pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
   pos.width = 100;
   pos.height = 100;
@@ -23,7 +23,7 @@ void World_OptionsButton_Init(Nav_Context *ctx) {
 }
 
 
-void World_OptionsButton_Render(Nav_Context *ctx) {
+void World_OptionsButton_Render(Game_Context *ctx) {
   rect = Pos_CalcAnchored(&pos);
   if (SDL_RenderCopy(ctx->renderer, texture, NULL, &rect) != 0) {
     logError("OptionsButton: failed to render: %s %s", SDL_GetError());
@@ -32,10 +32,10 @@ void World_OptionsButton_Render(Nav_Context *ctx) {
 }
 
 
-void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Input_ClickTap *pos) {
+void World_OptionsButton_HandleClickTap(Game_Context *ctx, Input_ClickTap *pos) {
   if (Pos_IsInside(&rect, pos)) {
     Aud_PlayOnce(press);
-    Nav_GoTo(Home_GetScreen());
+    Game_GoTo(Home_GetScreen());
   }
 }
 

@@ -1,10 +1,8 @@
 #ifndef SCREENS_HOME_h
 #define SCREENS_HOME_h
 
-#include "core/navigation.h"
+#include "core/game.h"
 
-
-Nav_Screen* Home_GetScreen();
-
+Game_Screen* Home_GetScreen();
 
 #endif

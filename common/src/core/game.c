@@ -1,9 +1,9 @@
-#include "core/navigation.h"
+#include "core/game.h"
 #include "core/positioning.h"
 
 
-static Nav_Screen *current;
-static Nav_Context ctx;
+static Game_Screen *current;
+static Game_Context ctx;
 
 
 static void relayout() {
@@ -12,7 +12,7 @@ static void relayout() {
 }
 
 
-void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, Nav_Screen *initial) {
+void Game_Init(SDL_Renderer *renderer, SDL_Window *window, Game_Screen *initial) {
   ctx.renderer = renderer;
   ctx.window = window;
   relayout();
@@ -21,22 +21,22 @@ void Nav_Init(SDL_Renderer *renderer, SDL_Window *window, Nav_Screen *initial) {
 }
 
 
-void Nav_HandleClickTap(Input_ClickTap *pos) {
+void Game_HandleClickTap(Input_ClickTap *pos) {
   current->handleClickTap(&ctx, pos);
 }
 
 
-void Nav_HandleFingerEvent(Input_FingerEvent *event) {
+void Game_HandleFingerEvent(Input_FingerEvent *event) {
   current->handleFingerEvent(&ctx, event);
 }
 
 
-void Nav_HandleKeyboardEvent(Input_KeyboardEvent *event) {
+void Game_HandleKeyboardEvent(Input_KeyboardEvent *event) {
   current->handleKeyboardEvent(&ctx, event);
 }
 
 
-void Nav_GoTo(Nav_Screen *next) {
+void Game_GoTo(Game_Screen *next) {
   if (current != NULL) {
     current->destroy();
   }
@@ -45,12 +45,12 @@ void Nav_GoTo(Nav_Screen *next) {
 }
 
 
-void Nav_UpdateModel(Uint64 elapsedTime) {
+void Game_UpdateModel(Uint64 elapsedTime) {
   current->updateModel(elapsedTime);
 }
 
 
-void Nav_Render() {
+void Game_Render() {
   relayout();
   current->render(&ctx);
   Pos_RenderLetterBox(ctx.renderer);

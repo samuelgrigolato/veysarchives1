@@ -1,4 +1,4 @@
-#include "core/navigation.h"
+#include "core/game.h"
 #include "core/positioning.h"
 #include "core/audio.h"
 #include "core/log.h"
@@ -21,7 +21,7 @@ static Aud_SoundID minimapPress;
 #define MINIMAP_COLUMNS (200 / MINIMAP_CELL_SIZE)
 
 
-void World_Map_Init(Nav_Context *ctx) {
+void World_Map_Init(Game_Context *ctx) {
   logInfo("Map: initializing.");
 
   map = Res_ReadFully("map.txt", 128);
@@ -59,7 +59,7 @@ SDL_bool World_Map_IsPassableTile(int row, int column) {
 }
 
 
-void World_Map_Render(Nav_Context *ctx, Sint32 *playerPosX, Sint32 *playerPosY) {
+void World_Map_Render(Game_Context *ctx, Sint32 *playerPosX, Sint32 *playerPosY) {
 
   Sint32 playerCellX = *playerPosX / MAP_CELL_SIZE;
   Sint32 playerCellY = *playerPosY / MAP_CELL_SIZE;

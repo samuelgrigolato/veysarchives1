@@ -4,9 +4,9 @@
 #include "platform.h"
 #include <SDL.h>
 #include <SDL_image.h>
-#include "core/navigation.h"
+#include "core/game.h"
 
-SDL_Texture* Res_LoadTexture(Nav_Context *ctx, char *filePath);
+SDL_Texture* Res_LoadTexture(Game_Context *ctx, char *filePath);
 
 void Res_ReleaseTexture(SDL_Texture *texture);
 

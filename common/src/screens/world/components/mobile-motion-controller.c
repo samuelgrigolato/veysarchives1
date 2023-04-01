@@ -1,5 +1,5 @@
 #include "core/log.h"
-#include "core/navigation.h"
+#include "core/game.h"
 #include "core/positioning.h"
 #include "core/resources.h"
 #include "screens/world/components/main-character.h"
@@ -16,7 +16,7 @@ static SDL_bool active = SDL_FALSE;
 #define MOBILE_MOTION_CONTROLLER_SIZE 400
 
 
-void World_MobileMotionController_Init(Nav_Context *ctx) {
+void World_MobileMotionController_Init(Game_Context *ctx) {
   logInfo("MobileMotionController: initializing.");
   if (visible) {
     pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
@@ -33,7 +33,7 @@ void World_MobileMotionController_Init(Nav_Context *ctx) {
 }
 
 
-void World_MobileMotionController_Render(Nav_Context *ctx) {
+void World_MobileMotionController_Render(Game_Context *ctx) {
   if (visible) {
     rect = Pos_CalcAnchored(&pos);
     if (SDL_RenderCopy(ctx->renderer, texture, &pose, &rect) != 0) {
@@ -44,7 +44,7 @@ void World_MobileMotionController_Render(Nav_Context *ctx) {
 }
 
 
-void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event) {
+void World_MobileMotionController_HandleFingerEvent(Game_Context *ctx, Input_FingerEvent *event) {
   if (!visible) return;
 
   MaybeBool mainCharacterWalkingNorth = MaybeBool_EMPTY,

@@ -9,7 +9,7 @@
     "sdl_image.h": "c",
     "sdl.h": "c",
     "log.h": "c",
-    "navigation.h": "c",
+    "game.h": "c",
     "atomic": "c",
     "memory_resource": "c",
     "main.h": "c",
@@ -24,6 +24,7 @@
     "options-button.h": "c",
     "main-character.h": "c",
     "map.h": "c",
-    "input.h": "c"
+    "input.h": "c",
+    "world.h": "c"
   }
 }

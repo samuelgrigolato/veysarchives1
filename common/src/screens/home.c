@@ -1,8 +1,5 @@
-#include "platform.h"
-#include <SDL.h>
-#include <SDL_image.h>
 #include "core/log.h"
-#include "core/navigation.h"
+#include "core/game.h"
 #include "core/positioning.h"
 #include "core/resources.h"
 #include "core/audio.h"
@@ -25,7 +22,7 @@ static Aud_EntryID backgroundMusicEntry;
 static Aud_SoundID buttonPress;
 
 
-void Home_Init(Nav_Context *ctx) {
+void Home_Init(Game_Context *ctx) {
   logInfo("Home: initializing.");
 
   newGameButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_CENTER_RIGHT;
@@ -55,7 +52,7 @@ void Home_UpdateModel(Uint64 elapsedTime) {
 }
 
 
-void Home_Render(Nav_Context *ctx) {
+void Home_Render(Game_Context *ctx) {
 
   SDL_Rect background = Pos_CalcCover();
   if (SDL_RenderCopy(ctx->renderer, backgroundTexture, NULL, &background) != 0) {
@@ -78,20 +75,20 @@ void Home_Render(Nav_Context *ctx) {
 }
 
 
-void Home_HandleClickTap(Nav_Context *ctx, Input_ClickTap *pos) {
+void Home_HandleClickTap(Game_Context *ctx, Input_ClickTap *pos) {
   if (Pos_IsInside(&newGameButtonRect, pos) || Pos_IsInside(&continueButtonRect, pos)) {
     Aud_PlayOnce(buttonPress);
     Aud_FadeOutAndStop(backgroundMusicEntry);
-    Nav_GoTo(World_GetScreen());
+    Game_GoTo(World_GetScreen());
   }
 }
 
 
-void Home_HandleFingerEvent(Nav_Context *ctx, Input_FingerEvent *event) {
+void Home_HandleFingerEvent(Game_Context *ctx, Input_FingerEvent *event) {
 }
 
 
-void Home_HandleKeyboardEvent(Nav_Context *ctx, Input_KeyboardEvent *event) {
+void Home_HandleKeyboardEvent(Game_Context *ctx, Input_KeyboardEvent *event) {
 }
 
 
@@ -105,10 +102,10 @@ void Home_Destroy() {
 }
 
 
-Nav_Screen* Home_GetScreen() {
-  static Nav_Screen *instance = NULL;
+Game_Screen* Home_GetScreen() {
+  static Game_Screen *instance = NULL;
   if (instance == NULL) {
-    instance = malloc(sizeof(Nav_Screen));
+    instance = malloc(sizeof(Game_Screen));
     instance->init = Home_Init;
     instance->updateModel = Home_UpdateModel;
     instance->render = Home_Render;

@@ -1,11 +1,7 @@
-#include "platform.h"
-#include <SDL.h>
-#include <SDL_image.h>
+#include "core/game.h"
 #include "core/log.h"
-#include "core/navigation.h"
-#include "core/positioning.h"
-#include "core/audio.h"
 #include "core/input.h"
+#include "core/audio.h"
 #include "screens/home.h"
 
 
@@ -36,7 +32,7 @@ static void handleFingerEvent(SDL_Event *event) {
   }
   fingerEvent.nx = event->tfinger.x;
   fingerEvent.ny = event->tfinger.y;
-  Nav_HandleFingerEvent(&fingerEvent);
+  Game_HandleFingerEvent(&fingerEvent);
 }
 
 
@@ -52,7 +48,7 @@ static void handleKeyboardEvent(SDL_Event *event) {
       break;
   }
   keyboardEvent.key = event->key.keysym.sym;
-  Nav_HandleKeyboardEvent(&keyboardEvent);
+  Game_HandleKeyboardEvent(&keyboardEvent);
 }
 
 
@@ -94,7 +90,7 @@ int main(int argc, char* argv[]) {
   SDL_Event event;
   Uint64 lastFrameStartTime = SDL_GetTicks64();
 
-  Nav_Init(renderer, window, Home_GetScreen());
+  Game_Init(renderer, window, Home_GetScreen());
 
   while (running) {
     while (SDL_PollEvent(&event)) {
@@ -105,7 +101,7 @@ int main(int argc, char* argv[]) {
           Input_ClickTap pos;
           pos.x = event.button.x;
           pos.y = event.button.y;
-          Nav_HandleClickTap(&pos);
+          Game_HandleClickTap(&pos);
         }
       } else if (event.type == SDL_FINGERDOWN ||
                  event.type == SDL_FINGERUP ||
@@ -119,12 +115,12 @@ int main(int argc, char* argv[]) {
 
     Uint64 thisFrameStartTime = SDL_GetTicks64();
     Uint64 elapsedTime = thisFrameStartTime - lastFrameStartTime;
-    Nav_UpdateModel(elapsedTime);
+    Game_UpdateModel(elapsedTime);
     lastFrameStartTime= thisFrameStartTime;
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
-    Nav_Render();
+    Game_Render();
     SDL_RenderPresent(renderer);
 
     Uint64 thisFrameEndTime = SDL_GetTicks64();

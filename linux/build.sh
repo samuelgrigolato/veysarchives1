@@ -18,7 +18,7 @@ gcc \
   -lcurl -lSDL2 -lSDL2_image \
   -Wl,-rpath,. \
   $BASE_DIR/../common/src/main.c \
-  $BASE_DIR/../common/src/core/navigation.c \
+  $BASE_DIR/../common/src/core/game.c \
   $BASE_DIR/../common/src/core/positioning.c \
   $BASE_DIR/../common/src/core/resources.c \
   $BASE_DIR/../common/src/core/audio.c \
