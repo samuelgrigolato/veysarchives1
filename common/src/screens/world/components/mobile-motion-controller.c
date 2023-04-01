@@ -5,37 +5,37 @@
 #include "screens/world/components/mobile-motion-controller.h"
 
 
-SDL_bool mobileMotionControllerVisible = !DESKTOP;
-Pos_AnchoredElement mobileMotionControllerPos;
-SDL_Rect mobileMotionControllerRect;
-SDL_Texture *mobileMotionControllerTexture;
-SDL_Rect mobileMotionControllerPose;
-SDL_bool mobileMotionControllerActive = SDL_FALSE;
+static SDL_bool visible = !DESKTOP;
+static Pos_AnchoredElement pos;
+static SDL_Rect rect;
+static SDL_Texture *texture;
+static SDL_Rect pose;
+static SDL_bool active = SDL_FALSE;
 #define MOBILE_MOTION_CONTROLLER_IDLE_THRESHOLD 75
 #define MOBILE_MOTION_CONTROLLER_SIZE 400
 
 
 void World_MobileMotionController_Init(Nav_Context *ctx) {
   logInfo("MobileMotionController: initializing.");
-  if (mobileMotionControllerVisible) {
-    mobileMotionControllerPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
-    mobileMotionControllerPos.width = MOBILE_MOTION_CONTROLLER_SIZE;
-    mobileMotionControllerPos.height = MOBILE_MOTION_CONTROLLER_SIZE;
-    mobileMotionControllerPos.anchorBottom = 50;
-    mobileMotionControllerPos.anchorLeft = 50;
-    mobileMotionControllerPose.w = MOBILE_MOTION_CONTROLLER_SIZE;
-    mobileMotionControllerPose.h = MOBILE_MOTION_CONTROLLER_SIZE;
-    mobileMotionControllerPose.x = MOBILE_MOTION_CONTROLLER_SIZE;
-    mobileMotionControllerPose.y = 0;
-    mobileMotionControllerTexture = Res_LoadTexture(ctx, "mobile-motion-controller.png");
+  if (visible) {
+    pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
+    pos.width = MOBILE_MOTION_CONTROLLER_SIZE;
+    pos.height = MOBILE_MOTION_CONTROLLER_SIZE;
+    pos.anchorBottom = 50;
+    pos.anchorLeft = 50;
+    pose.w = MOBILE_MOTION_CONTROLLER_SIZE;
+    pose.h = MOBILE_MOTION_CONTROLLER_SIZE;
+    pose.x = MOBILE_MOTION_CONTROLLER_SIZE;
+    pose.y = 0;
+    texture = Res_LoadTexture(ctx, "mobile-motion-controller.png");
   }
 }
 
 
 void World_MobileMotionController_Render(Nav_Context *ctx) {
-  if (mobileMotionControllerVisible) {
-    mobileMotionControllerRect = Pos_CalcAnchored(&mobileMotionControllerPos);
-    if (SDL_RenderCopy(ctx->renderer, mobileMotionControllerTexture, &mobileMotionControllerPose, &mobileMotionControllerRect) != 0) {
+  if (visible) {
+    rect = Pos_CalcAnchored(&pos);
+    if (SDL_RenderCopy(ctx->renderer, texture, &pose, &rect) != 0) {
       logError("MobileMotionController: failed to render: %s %s", SDL_GetError());
       exit(1);
     }
@@ -44,7 +44,7 @@ void World_MobileMotionController_Render(Nav_Context *ctx) {
 
 
 void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_FingerEvent *event) {
-  if (!mobileMotionControllerVisible) return;
+  if (!visible) return;
 
   MaybeBool mainCharacterWalkingNorth = MaybeBool_EMPTY,
     mainCharacterWalkingSouth = MaybeBool_EMPTY,
@@ -52,30 +52,30 @@ void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_Finger
     mainCharacterWalkingEast = MaybeBool_EMPTY;
 
   if (event->type == NAV_FINGER_EVENT_TYPE_DOWN &&
-      Pos_IsFingerEventInside(&mobileMotionControllerRect, event, ctx) &&
-      mobileMotionControllerActive == SDL_FALSE) {
+      Pos_IsFingerEventInside(&rect, event, ctx) &&
+      active == SDL_FALSE) {
 
-    mobileMotionControllerActive = SDL_TRUE;
-    mobileMotionControllerPose.x = 0;
-    mobileMotionControllerPose.y = 0;
+    active = SDL_TRUE;
+    pose.x = 0;
+    pose.y = 0;
 
   } else if (event->type == NAV_FINGER_EVENT_TYPE_UP &&
-             mobileMotionControllerActive == SDL_TRUE) {
+             active == SDL_TRUE) {
 
-    mobileMotionControllerActive = SDL_FALSE;
-    mobileMotionControllerPose.x = 400;
-    mobileMotionControllerPose.y = 0;
+    active = SDL_FALSE;
+    pose.x = 400;
+    pose.y = 0;
     mainCharacterWalkingNorth = MaybeBool_FALSE;
     mainCharacterWalkingSouth = MaybeBool_FALSE;
     mainCharacterWalkingWest = MaybeBool_FALSE;
     mainCharacterWalkingEast = MaybeBool_FALSE;
 
-  } else if (mobileMotionControllerActive == SDL_TRUE) { // NAV_FINGER_EVENT_MOTION
+  } else if (active == SDL_TRUE) { // NAV_FINGER_EVENT_MOTION
 
     Sint32 eventX = ctx->windowWidth * event->nx;
     Sint32 eventY = ctx->windowHeight * event->ny;
-    Sint32 relativeX = eventX - (mobileMotionControllerRect.x + (mobileMotionControllerRect.w / 2));
-    Sint32 relativeY = eventY - (mobileMotionControllerRect.y + (mobileMotionControllerRect.h / 2));
+    Sint32 relativeX = eventX - (rect.x + (rect.w / 2));
+    Sint32 relativeY = eventY - (rect.y + (rect.h / 2));
 
     Sint32 poseX, poseY;
     if (relativeX > MOBILE_MOTION_CONTROLLER_IDLE_THRESHOLD) { // finger is to the right
@@ -145,8 +145,8 @@ void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_Finger
         mainCharacterWalkingSouth = MaybeBool_FALSE;
       }
     }
-    mobileMotionControllerPose.x = poseX;
-    mobileMotionControllerPose.y = poseY;
+    pose.x = poseX;
+    pose.y = poseY;
 
   }
 
@@ -156,7 +156,7 @@ void World_MobileMotionController_HandleFingerEvent(Nav_Context *ctx, Nav_Finger
 
 
 void World_MobileMotionController_Destroy() {
-  if (mobileMotionControllerVisible) {
-    Res_ReleaseTexture(mobileMotionControllerTexture);
+  if (visible) {
+    Res_ReleaseTexture(texture);
   }
 }

@@ -5,31 +5,31 @@
 #include "screens/world/components/map.h"
 
 
-Pos_AnchoredElement mainCharacterPos;
-SDL_Rect mainCharacterRect;
-SDL_Texture *mainCharacterTexture;
-SDL_Rect mainCharacterPose;
-SDL_bool mainCharacterWalkingNorth = SDL_FALSE;
-SDL_bool mainCharacterWalkingSouth = SDL_FALSE;
-SDL_bool mainCharacterWalkingWest = SDL_FALSE;
-SDL_bool mainCharacterWalkingEast = SDL_FALSE;
-Sint32 mainCharacterTimeWalking = 0;
+static Pos_AnchoredElement pos;
+static SDL_Rect rect;
+static SDL_Texture *texture;
+static SDL_Rect pose;
+static SDL_bool walkingNorth = SDL_FALSE;
+static SDL_bool walkingSouth = SDL_FALSE;
+static SDL_bool walkingWest = SDL_FALSE;
+static SDL_bool walkingEast = SDL_FALSE;
+static Sint32 timeWalking = 0;
 #define MAIN_CHARACTER_SIZE 100
 
 
 void World_MainCharacter_Init(Nav_Context *ctx) {
   logInfo("MainCharacter: initializing.");
 
-  mainCharacterPos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
-  mainCharacterPos.width = 100;
-  mainCharacterPos.height = 100;
-  mainCharacterPos.anchorTop = 405;
-  mainCharacterPos.anchorCenterLeft = -50;
-  mainCharacterPose.w = 99;
-  mainCharacterPose.h = 99;
-  mainCharacterPose.x = 1;
-  mainCharacterPose.y = 201;
-  mainCharacterTexture = Res_LoadTexture(ctx, "main-character.png");
+  pos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
+  pos.width = 100;
+  pos.height = 100;
+  pos.anchorTop = 405;
+  pos.anchorCenterLeft = -50;
+  pose.w = 99;
+  pose.h = 99;
+  pose.x = 1;
+  pose.y = 201;
+  texture = Res_LoadTexture(ctx, "main-character.png");
 
 }
 
@@ -39,16 +39,16 @@ void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sin
   Sint32 dx = 0;
   Sint32 dy = 0;
 
-  if (mainCharacterWalkingNorth) {
+  if (walkingNorth) {
     dy -= elapsedTime / 2;
   }
-  if (mainCharacterWalkingSouth) {
+  if (walkingSouth) {
     dy += elapsedTime / 2;
   }
-  if (mainCharacterWalkingWest) {
+  if (walkingWest) {
     dx -= elapsedTime / 2;
   }
-  if (mainCharacterWalkingEast) {
+  if (walkingEast) {
     dx += elapsedTime / 2;
   }
 
@@ -72,22 +72,22 @@ void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sin
   }
 
   if (dx != 0 || dy != 0) {
-    mainCharacterTimeWalking += elapsedTime;
-    mainCharacterPose.x = ((mainCharacterTimeWalking / 100) % 3) * MAIN_CHARACTER_SIZE;
+    timeWalking += elapsedTime;
+    pose.x = ((timeWalking / 100) % 3) * MAIN_CHARACTER_SIZE;
   } else {
-    mainCharacterTimeWalking = 0;
-    mainCharacterPose.x = 1 * MAIN_CHARACTER_SIZE;
+    timeWalking = 0;
+    pose.x = 1 * MAIN_CHARACTER_SIZE;
   }
 
   if (dx > 0) { // east
-    mainCharacterPose.y = 1 * MAIN_CHARACTER_SIZE;
+    pose.y = 1 * MAIN_CHARACTER_SIZE;
   } else if (dx < 0) { // west
-    mainCharacterPose.y = 3 * MAIN_CHARACTER_SIZE;
+    pose.y = 3 * MAIN_CHARACTER_SIZE;
   } else {
     if (dy > 0) { // south
-      mainCharacterPose.y = 2 * MAIN_CHARACTER_SIZE;
+      pose.y = 2 * MAIN_CHARACTER_SIZE;
     } else if (dy < 0) { // north
-      mainCharacterPose.y = 0 * MAIN_CHARACTER_SIZE;
+      pose.y = 0 * MAIN_CHARACTER_SIZE;
     }
   }
 
@@ -96,8 +96,8 @@ void World_MainCharacter_UpdateModel(Uint64 elapsedTime, Sint32 *playerPosX, Sin
 
 void World_MainCharacter_Render(Nav_Context *ctx) {
 
-  mainCharacterRect = Pos_CalcAnchored(&mainCharacterPos);
-  if (SDL_RenderCopy(ctx->renderer, mainCharacterTexture, &mainCharacterPose, &mainCharacterRect) != 0) {
+  rect = Pos_CalcAnchored(&pos);
+  if (SDL_RenderCopy(ctx->renderer, texture, &pose, &rect) != 0) {
     logError("MainCharacter: failed to render: %s %s", SDL_GetError());
     exit(1);
   }
@@ -106,16 +106,16 @@ void World_MainCharacter_Render(Nav_Context *ctx) {
 
 void World_MainCharacter_SetWalkingDirections(MaybeBool north, MaybeBool south, MaybeBool west, MaybeBool east) {
   if (north != MaybeBool_EMPTY) {
-    mainCharacterWalkingNorth = north == MaybeBool_TRUE;
+    walkingNorth = north == MaybeBool_TRUE;
   }
   if (south != MaybeBool_EMPTY) {
-    mainCharacterWalkingSouth = south == MaybeBool_TRUE;
+    walkingSouth = south == MaybeBool_TRUE;
   }
   if (west != MaybeBool_EMPTY) {
-    mainCharacterWalkingWest = west == MaybeBool_TRUE;
+    walkingWest = west == MaybeBool_TRUE;
   }
   if (east != MaybeBool_EMPTY) {
-    mainCharacterWalkingEast = east == MaybeBool_TRUE;
+    walkingEast = east == MaybeBool_TRUE;
   }
 }
 
@@ -125,16 +125,16 @@ void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent
     case NAV_KEYBOARD_EVENT_TYPE_DOWN:
       switch (event->key) {
         case SDLK_UP:
-          mainCharacterWalkingNorth = SDL_TRUE;
+          walkingNorth = SDL_TRUE;
           break;
         case SDLK_DOWN:
-          mainCharacterWalkingSouth = SDL_TRUE;
+          walkingSouth = SDL_TRUE;
           break;
         case SDLK_LEFT:
-          mainCharacterWalkingWest = SDL_TRUE;
+          walkingWest = SDL_TRUE;
           break;
         case SDLK_RIGHT:
-          mainCharacterWalkingEast = SDL_TRUE;
+          walkingEast = SDL_TRUE;
           break;
         default:
           break;
@@ -144,16 +144,16 @@ void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent
     default:
       switch (event->key) {
         case SDLK_UP:
-          mainCharacterWalkingNorth = SDL_FALSE;
+          walkingNorth = SDL_FALSE;
           break;
         case SDLK_DOWN:
-          mainCharacterWalkingSouth = SDL_FALSE;
+          walkingSouth = SDL_FALSE;
           break;
         case SDLK_LEFT:
-          mainCharacterWalkingWest = SDL_FALSE;
+          walkingWest = SDL_FALSE;
           break;
         case SDLK_RIGHT:
-          mainCharacterWalkingEast = SDL_FALSE;
+          walkingEast = SDL_FALSE;
           break;
         default:
           break;
@@ -165,5 +165,5 @@ void World_MainCharacter_HandleKeyboardEvent(Nav_Context *ctx, Nav_KeyboardEvent
 
 void World_MainCharacter_Destroy() {
   logInfo("MainCharacter: destroying.");
-  Res_ReleaseTexture(mainCharacterTexture);
+  Res_ReleaseTexture(texture);
 }

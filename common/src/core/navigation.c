@@ -2,11 +2,11 @@
 #include "core/positioning.h"
 
 
-Nav_Screen *current;
-Nav_Context ctx;
+static Nav_Screen *current;
+static Nav_Context ctx;
 
 
-void relayout() {
+static void relayout() {
   SDL_GetWindowSize(ctx.window, &ctx.windowWidth, &ctx.windowHeight);
   Pos_Relayout(&ctx);
 }

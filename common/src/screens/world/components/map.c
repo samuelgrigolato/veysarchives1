@@ -5,16 +5,16 @@
 #include "screens/world/components/map.h"
 
 
-char *map;
-SDL_Texture *mapCellTextures;
+static char *map;
+static SDL_Texture *mapCellTextures;
 #define MAP_MAX_VISIBLE_ROWS ((POS_BASE_DISPLAY_HEIGHT / MAP_CELL_SIZE) + 1)
 #define MAP_MAX_VISIBLE_COLUMNS ((POS_BASE_DISPLAY_WIDTH / MAP_CELL_SIZE) + 1)
 
 
-Pos_AnchoredElement minimapPos;
-SDL_Rect minimapRect;
-SDL_Texture *minimapTexture;
-Aud_SoundID minimapPress;
+static Pos_AnchoredElement minimapPos;
+static SDL_Rect minimapRect;
+static SDL_Texture *minimapTexture;
+static Aud_SoundID minimapPress;
 #define MINIMAP_CELL_SIZE 5
 #define MINIMAP_ROWS (200 / MINIMAP_CELL_SIZE)
 #define MINIMAP_COLUMNS (200 / MINIMAP_CELL_SIZE)

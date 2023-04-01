@@ -22,14 +22,14 @@ typedef struct LoadedSoundNode {
 } LoadedSoundNode;
 
 
-Aud_EntryID nextEntryId = 0;
-PlayingSoundNode *playingSounds = NULL;
-LoadedSoundNode *loadedSounds = NULL;
-SDL_AudioDeviceID device;
-void onAudioDeviceCallback(void *userData, Uint8* stream, int len);
+static Aud_EntryID nextEntryId = 0;
+static PlayingSoundNode *playingSounds = NULL;
+static LoadedSoundNode *loadedSounds = NULL;
+static SDL_AudioDeviceID device;
+static void onAudioDeviceCallback(void *userData, Uint8* stream, int len);
 
 
-LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
+static LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
   LoadedSoundNode *current = loadedSounds;
   while (current != NULL) {
     if (current->id == soundId) {
@@ -41,7 +41,7 @@ LoadedSoundNode* findLoadedSound(Aud_SoundID soundId) {
 }
 
 
-Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
+static Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
   LoadedSoundNode *sound = findLoadedSound(soundId);
   if (sound == NULL) {
     logError("Audio: tried to play an unloaded sound. soundId=%u", soundId);
@@ -66,7 +66,7 @@ Aud_EntryID playSound(Aud_SoundID soundId, SDL_bool repeat, SDL_bool fade) {
 }
 
 
-PlayingSoundNode* findPlayingSound(Aud_EntryID entryId) {
+static PlayingSoundNode* findPlayingSound(Aud_EntryID entryId) {
   PlayingSoundNode *playingSound = playingSounds;
   while (playingSound != NULL) {
     if (playingSound->entryId == entryId) {
@@ -94,7 +94,7 @@ void Aud_Init() {
 }
 
 
-Aud_SoundID findAvailableSoundId() {
+static Aud_SoundID findAvailableSoundId() {
   Aud_SoundID result = 1;
   while (findLoadedSound(result) != NULL) {
     if (result == 255) {
@@ -189,7 +189,7 @@ void Aud_PlayOnce(Aud_SoundID soundId) {
 }
 
 
-void onAudioDeviceCallback(void *userData, Uint8 *stream, int len) {
+static void onAudioDeviceCallback(void *userData, Uint8 *stream, int len) {
   // useful for debugging
   // logInfo("Audio: callback called with len=%d", len);
 

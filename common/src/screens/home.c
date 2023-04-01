@@ -9,19 +9,19 @@
 #include "screens/world/world.h"
 
 
-Pos_AnchoredElement newGameButtonPos;
-SDL_Rect newGameButtonRect;
-SDL_Texture *newGameButtonTexture;
+static Pos_AnchoredElement newGameButtonPos;
+static SDL_Rect newGameButtonRect;
+static SDL_Texture *newGameButtonTexture;
 
-Pos_AnchoredElement continueButtonPos;
-SDL_Rect continueButtonRect;
-SDL_Texture *continueButtonTexture;
+static Pos_AnchoredElement continueButtonPos;
+static SDL_Rect continueButtonRect;
+static SDL_Texture *continueButtonTexture;
 
-SDL_Texture *backgroundTexture;
-Aud_SoundID backgroundMusic;
-Aud_EntryID backgroundMusicEntry;
+static SDL_Texture *backgroundTexture;
+static Aud_SoundID backgroundMusic;
+static Aud_EntryID backgroundMusicEntry;
 
-Aud_SoundID buttonPress;
+static Aud_SoundID buttonPress;
 
 
 void Home_Init(Nav_Context *ctx) {

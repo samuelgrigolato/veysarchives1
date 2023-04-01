@@ -10,8 +10,8 @@
 #include "screens/home.h"
 
 
-Sint32 playerPosX = 100;
-Sint32 playerPosY = 100;
+static Sint32 playerPosX = 100;
+static Sint32 playerPosY = 100;
 
 
 void World_Init(Nav_Context *ctx) {

@@ -6,26 +6,26 @@
 #include "screens/world/components/options-button.h"
 
 
-Pos_AnchoredElement optionsButtonPos;
-SDL_Rect optionsButtonRect;
-SDL_Texture *optionsButtonTexture;
-Aud_SoundID optionsButtonPress;
+static Pos_AnchoredElement pos;
+static SDL_Rect rect;
+static SDL_Texture *texture;
+static Aud_SoundID press;
 
 
 void World_OptionsButton_Init(Nav_Context *ctx) {
-  optionsButtonPos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
-  optionsButtonPos.width = 100;
-  optionsButtonPos.height = 100;
-  optionsButtonPos.anchorBottom = 0;
-  optionsButtonPos.anchorRight = 0;
-  optionsButtonTexture = Res_LoadTexture(ctx, "options-button.png");
-  optionsButtonPress = Aud_Load("button-press.wav");
+  pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
+  pos.width = 100;
+  pos.height = 100;
+  pos.anchorBottom = 0;
+  pos.anchorRight = 0;
+  texture = Res_LoadTexture(ctx, "options-button.png");
+  press = Aud_Load("button-press.wav");
 }
 
 
 void World_OptionsButton_Render(Nav_Context *ctx) {
-  optionsButtonRect = Pos_CalcAnchored(&optionsButtonPos);
-  if (SDL_RenderCopy(ctx->renderer, optionsButtonTexture, NULL, &optionsButtonRect) != 0) {
+  rect = Pos_CalcAnchored(&pos);
+  if (SDL_RenderCopy(ctx->renderer, texture, NULL, &rect) != 0) {
     logError("OptionsButton: failed to render: %s %s", SDL_GetError());
     exit(1);
   }
@@ -33,8 +33,8 @@ void World_OptionsButton_Render(Nav_Context *ctx) {
 
 
 void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
-  if (Pos_IsInside(&optionsButtonRect, pos)) {
-    Aud_PlayOnce(optionsButtonPress);
+  if (Pos_IsInside(&rect, pos)) {
+    Aud_PlayOnce(press);
     Nav_GoTo(Home_GetScreen());
   }
 }
@@ -42,6 +42,6 @@ void World_OptionsButton_HandleClickTap(Nav_Context *ctx, Nav_ClickTap *pos) {
 
 void World_OptionsButton_Destroy() {
   logInfo("OptionsButton: destroying.");
-  Res_ReleaseTexture(optionsButtonTexture);
-  Aud_Unload(optionsButtonPress);
+  Res_ReleaseTexture(texture);
+  Aud_Unload(press);
 }

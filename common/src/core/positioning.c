@@ -7,7 +7,7 @@
  * letter boxing will be applied. This rect is the useful area without
  * the black stripes.
  */
-SDL_Rect usefulArea;
+static SDL_Rect usefulArea;
 
 
 /**
@@ -15,14 +15,14 @@ SDL_Rect usefulArea;
  * of height. This multiplier allows to correctly zoom both the height
  * and width of assets on devices with smaller or denser resolutions.
 */
-float zoom;
+static float zoom;
 
 
 #define POS_MAX_SUPPORTED_ASPECT_RATIO (2100.0 / 900.0)
 #define POS_MIN_SUPPORTED_ASPECT_RATIO (1600.0 / 900.0)
 
 
-float zoomed(Sint32 base) {
+static float zoomed(Sint32 base) {
   return base * zoom;
 }
 

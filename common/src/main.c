@@ -8,7 +8,7 @@
 #include "screens/home.h"
 
 
-void logDisplayInfo(SDL_Window *window) {
+static void logDisplayInfo(SDL_Window *window) {
   int h, w;
   SDL_GL_GetDrawableSize(window, &w, &h);
   logInfo("DrawableSize: %dx%d", w, h);
@@ -19,7 +19,7 @@ void logDisplayInfo(SDL_Window *window) {
 }
 
 
-void handleFingerEvent(SDL_Event *event) {
+static void handleFingerEvent(SDL_Event *event) {
   Nav_FingerEvent fingerEvent;
   switch (event->type) {
     case SDL_FINGERDOWN:
@@ -39,7 +39,7 @@ void handleFingerEvent(SDL_Event *event) {
 }
 
 
-void handleKeyboardEvent(SDL_Event *event) {
+static void handleKeyboardEvent(SDL_Event *event) {
   Nav_KeyboardEvent keyboardEvent;
   switch (event->type) {
     case SDL_KEYDOWN:
