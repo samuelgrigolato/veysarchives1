@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		3605BBAA296B4D7400FD0F2D /* home.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBA8296B4D7400FD0F2D /* home.c */; };
-		3605BBAB296B4D7400FD0F2D /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBA9296B4D7400FD0F2D /* main.c */; };
 		3605BBAF296B4E2000FD0F2D /* game.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBAE296B4E2000FD0F2D /* game.c */; };
 		3605BBB1296B4E4100FD0F2D /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 3605BBB0296B4E4100FD0F2D /* log.c */; };
 		3656F8862978C857002D51B9 /* audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 3656F8762978C857002D51B9 /* audio.c */; };
 		3656F8872978C857002D51B9 /* resources.c in Sources */ = {isa = PBXBuildFile; fileRef = 3656F8852978C857002D51B9 /* resources.c */; };
+		367B277A29D8ED8B0028F414 /* world.c in Sources */ = {isa = PBXBuildFile; fileRef = 367B277929D8ED8B0028F414 /* world.c */; };
+		367B278029D8EDA40028F414 /* map.c in Sources */ = {isa = PBXBuildFile; fileRef = 367B277C29D8EDA30028F414 /* map.c */; };
+		367B278129D8EDA40028F414 /* main-character.c in Sources */ = {isa = PBXBuildFile; fileRef = 367B277D29D8EDA30028F414 /* main-character.c */; };
+		367B278229D8EDA40028F414 /* options-button.c in Sources */ = {isa = PBXBuildFile; fileRef = 367B277E29D8EDA40028F414 /* options-button.c */; };
+		367B278329D8EDA40028F414 /* mobile-motion-controller.c in Sources */ = {isa = PBXBuildFile; fileRef = 367B277F29D8EDA40028F414 /* mobile-motion-controller.c */; };
 		36A5D6ED29673ED500D11A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36A5D6EC29673ED500D11A33 /* Assets.xcassets */; };
 		36A5D6F029673ED500D11A33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36A5D6EE29673ED500D11A33 /* LaunchScreen.storyboard */; };
 		36A5D7382967443900D11A33 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A5D726296741F200D11A33 /* SDL2_image.framework */; };
@@ -143,11 +147,15 @@
 
 /* Begin PBXFileReference section */
 		3605BBA8296B4D7400FD0F2D /* home.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = home.c; path = ../../../../common/src/screens/home.c; sourceTree = "<group>"; };
-		3605BBA9296B4D7400FD0F2D /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../../common/src/screens/main.c; sourceTree = "<group>"; };
 		3605BBAE296B4E2000FD0F2D /* game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = game.c; path = ../../../../common/src/core/game.c; sourceTree = "<group>"; };
 		3605BBB0296B4E4100FD0F2D /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
 		3656F8762978C857002D51B9 /* audio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = audio.c; path = ../../../../common/src/core/audio.c; sourceTree = "<group>"; };
 		3656F8852978C857002D51B9 /* resources.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = resources.c; path = ../../../../common/src/core/resources.c; sourceTree = "<group>"; };
+		367B277929D8ED8B0028F414 /* world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = world.c; path = ../../../../../common/src/screens/world/world.c; sourceTree = "<group>"; };
+		367B277C29D8EDA30028F414 /* map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = map.c; path = ../../../../../../common/src/screens/world/components/map.c; sourceTree = "<group>"; };
+		367B277D29D8EDA30028F414 /* main-character.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "main-character.c"; path = "../../../../../../common/src/screens/world/components/main-character.c"; sourceTree = "<group>"; };
+		367B277E29D8EDA40028F414 /* options-button.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "options-button.c"; path = "../../../../../../common/src/screens/world/components/options-button.c"; sourceTree = "<group>"; };
+		367B277F29D8EDA40028F414 /* mobile-motion-controller.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "mobile-motion-controller.c"; path = "../../../../../../common/src/screens/world/components/mobile-motion-controller.c"; sourceTree = "<group>"; };
 		36A5D6DA29673ED400D11A33 /* VeysArchives1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VeysArchives1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A5D6EC29673ED500D11A33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36A5D6EF29673ED500D11A33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -175,8 +183,8 @@
 		3605BB99296B4D5100FD0F2D /* screens */ = {
 			isa = PBXGroup;
 			children = (
+				367B277829D8ED740028F414 /* world */,
 				3605BBA8296B4D7400FD0F2D /* home.c */,
-				3605BBA9296B4D7400FD0F2D /* main.c */,
 			);
 			path = screens;
 			sourceTree = "<group>";
@@ -191,6 +199,26 @@
 				3605BBAE296B4E2000FD0F2D /* game.c */,
 			);
 			path = core;
+			sourceTree = "<group>";
+		};
+		367B277829D8ED740028F414 /* world */ = {
+			isa = PBXGroup;
+			children = (
+				367B277B29D8ED8E0028F414 /* components */,
+				367B277929D8ED8B0028F414 /* world.c */,
+			);
+			path = world;
+			sourceTree = "<group>";
+		};
+		367B277B29D8ED8E0028F414 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				367B277D29D8EDA30028F414 /* main-character.c */,
+				367B277C29D8EDA30028F414 /* map.c */,
+				367B277F29D8EDA40028F414 /* mobile-motion-controller.c */,
+				367B277E29D8EDA40028F414 /* options-button.c */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		36A5D6D129673ED300D11A33 = {
@@ -445,11 +473,15 @@
 			files = (
 				3605BBB1296B4E4100FD0F2D /* log.c in Sources */,
 				36A92493296E37BC00166938 /* positioning.c in Sources */,
+				367B278029D8EDA40028F414 /* map.c in Sources */,
 				3656F8862978C857002D51B9 /* audio.c in Sources */,
-				3605BBAB296B4D7400FD0F2D /* main.c in Sources */,
 				3605BBAA296B4D7400FD0F2D /* home.c in Sources */,
+				367B278129D8EDA40028F414 /* main-character.c in Sources */,
+				367B278229D8EDA40028F414 /* options-button.c in Sources */,
 				3605BBAF296B4E2000FD0F2D /* game.c in Sources */,
 				36A5D740296744B900D11A33 /* main.c in Sources */,
+				367B278329D8EDA40028F414 /* mobile-motion-controller.c in Sources */,
+				367B277A29D8ED8B0028F414 /* world.c in Sources */,
 				3656F8872978C857002D51B9 /* resources.c in Sources */,
 				36A5D73E2967447600D11A33 /* SDL_uikit_main.c in Sources */,
 			);
