@@ -27,6 +27,7 @@
     "input.h": "c",
     "world.h": "c",
     "mobile-motion-controller.h": "c",
-    "thread": "c"
+    "thread": "c",
+    "battle.h": "c"
   }
 }
