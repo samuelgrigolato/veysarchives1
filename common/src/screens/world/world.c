@@ -7,6 +7,7 @@
 #include "screens/world/components/main-character.h"
 #include "screens/world/components/options-button.h"
 #include "screens/world/components/mobile-motion-controller.h"
+#include "screens/world/components/battle-trigger.h"
 #include "screens/world/world.h"
 #include "screens/home.h"
 
@@ -20,12 +21,14 @@ void World_Init(Game_Context *ctx) {
   World_MainCharacter_Init(ctx);
   World_OptionsButton_Init(ctx);
   World_MobileMotionController_Init(ctx);
+  World_BattleTrigger_Init(ctx);
   World_Map_Init(ctx);
 }
 
 
 void World_UpdateModel(Uint64 elapsedTime) {
   World_MainCharacter_UpdateModel(elapsedTime, &playerPosX, &playerPosY);
+  World_BattleTrigger_UpdateModel(elapsedTime, playerPosX, playerPosY);
 }
 
 
@@ -34,11 +37,13 @@ void World_Render(Game_Context *ctx) {
   World_MainCharacter_Render(ctx);
   World_OptionsButton_Render(ctx);
   World_MobileMotionController_Render(ctx);
+  World_BattleTrigger_Render(ctx);
 }
 
 
 void World_HandleClickTap(Game_Context *ctx, Input_ClickTap *pos) {
   World_OptionsButton_HandleClickTap(ctx, pos);
+  World_BattleTrigger_HandleClickTap(ctx, pos);
 }
 
 
@@ -49,6 +54,7 @@ void World_HandleFingerEvent(Game_Context *ctx, Input_FingerEvent *event) {
 
 void World_HandleKeyboardEvent(Game_Context *ctx, Input_KeyboardEvent *event) {
   World_MainCharacter_HandleKeyboardEvent(ctx, event);
+  World_BattleTrigger_HandleKeyboardEvent(ctx, event);
 }
 
 

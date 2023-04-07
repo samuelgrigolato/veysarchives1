@@ -26,7 +26,9 @@ gcc \
   $BASE_DIR/../common/src/screens/world/components/map.c \
   $BASE_DIR/../common/src/screens/world/components/main-character.c \
   $BASE_DIR/../common/src/screens/world/components/mobile-motion-controller.c \
+  $BASE_DIR/../common/src/screens/world/components/battle-trigger.c \
   $BASE_DIR/../common/src/screens/world/world.c \
+  $BASE_DIR/../common/src/screens/battle/battle.c \
   $BASE_DIR/../common/src/screens/home.c \
   $BASE_DIR/src/core/log.c \
   -o $BASE_DIR/dist/veysarchives1

@@ -25,6 +25,8 @@
     "main-character.h": "c",
     "map.h": "c",
     "input.h": "c",
-    "world.h": "c"
+    "world.h": "c",
+    "mobile-motion-controller.h": "c",
+    "thread": "c"
   }
 }
