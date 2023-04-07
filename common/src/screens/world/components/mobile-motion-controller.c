@@ -19,6 +19,7 @@ static SDL_bool active = SDL_FALSE;
 void World_MobileMotionController_Init(Game_Context *ctx) {
   logInfo("MobileMotionController: initializing.");
   if (visible) {
+    active = SDL_FALSE;
     pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_LEFT;
     pos.width = MOBILE_MOTION_CONTROLLER_SIZE;
     pos.height = MOBILE_MOTION_CONTROLLER_SIZE;

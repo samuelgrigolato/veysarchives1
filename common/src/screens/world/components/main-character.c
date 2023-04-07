@@ -21,6 +21,12 @@ static Sint32 timeWalking = 0;
 void World_MainCharacter_Init(Game_Context *ctx) {
   logInfo("MainCharacter: initializing.");
 
+  walkingNorth = SDL_FALSE;
+  walkingSouth = SDL_FALSE;
+  walkingWest = SDL_FALSE;
+  walkingEast = SDL_FALSE;
+  timeWalking = 0;
+
   pos.anchors = POS_ANCHOR_TOP | POS_ANCHOR_CENTER_LEFT;
   pos.width = 100;
   pos.height = 100;

@@ -13,6 +13,7 @@ static Aud_SoundID press;
 
 
 void World_OptionsButton_Init(Game_Context *ctx) {
+  logInfo("OptionsButton: initializing.");
   pos.anchors = POS_ANCHOR_BOTTOM | POS_ANCHOR_RIGHT;
   pos.width = 100;
   pos.height = 100;
